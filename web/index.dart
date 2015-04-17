@@ -88,7 +88,8 @@ main() async {
   
   window.navigator.geolocation.watchPosition(
     enableHighAccuracy: true,
-    timeout: new Duration(seconds: 60)
+    timeout: new Duration(seconds: 60),
+    maximumAge: new Duration(seconds: 0)
   ).listen((update) {
     var coords = update.coords;
     latitudeNode.updateValue(coords.latitude);
