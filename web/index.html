@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DSLink - Web Browser</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <link rel="import" href="packages/polymer/polymer.html">
+  <link rel="import" href="packages/core_elements/core_animated_pages.html">
+  <link rel="import" href="packages/core_elements/core_pages.html">
+  <link rel="import" href="packages/paper_elements/paper_tabs.html">
+  <link rel="import" href="packages/core_elements/core_header_panel.html">
+  <link rel="import" href="packages/core_elements/core_drawer_panel.html">
+  <link rel="import" href="packages/core_elements/core_toolbar.html">
+  <link rel="import" href="packages/paper_elements/paper_spinner.html">
+  <link rel="import" href="packages/paper_elements/paper_dialog.html">
+  <link rel="import" href="packages/paper_elements/paper_button.html">
+  <link rel="import" href="packages/paper_elements/paper_checkbox.html">
+  <link rel="import" href="packages/core_elements/core_label.html">
+
+  <style>
+    core-header-panel {
+      height: 100%;
+      display: block;
+    }
+
+    core-header-panel /deep/ #dropShadow {
+      box-shadow: inset 0 5px 6px -3px rgba(0, 0, 0, 0.26);
+      height: 60px;
+    }
+
+    core-toolbar {
+      background-color: #3f51b5;
+      color: white;
+    }
+
+    .content {
+      display: block;
+      padding-top: 100px;
+      height: 100%;
+    }
+
+    paper-spinner {
+      margin-top: 6px;
+      width: 25px;
+      height: 25px;
+    }
+
+    paper-spinner.red::shadow .circle {
+      border-color: #db4437;
+    }
+
+    paper-checkbox {
+      padding: 20px 20px 20px 0;
+    }
+  </style>
+</head>
+
+<body unresolved fullbleed layout vertical>
+
+<core-header-panel flex mode="standard">
+  <core-toolbar>
+    <div flex id="main-title">Web Browser Link</div>
+    <div horizontal layout end-justified>
+      <paper-icon-button icon="settings" title="settings" id="settings-btn"></paper-icon-button>
+    </div>
+  </core-toolbar>
+  <div class="content">
+  </div>
+</core-header-panel>
+
+<script type="application/dart" src="index.dart"></script>
+<script src="packages/browser/dart.js"></script>
+</body>
+</html>

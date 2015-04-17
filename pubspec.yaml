@@ -1,0 +1,11 @@
+name: dslink_web_browser
+description: Web Browser DSLink
+dependencies:
+  core_elements: ">=0.7.0 <0.8.0"
+  paper_elements: ">=0.7.0 <0.8.0"
+  polymer: ">=0.16.1+3 <0.17.0"
+  dslink:
+    git: https://github.com/IOT-DSA/sdk-dslink-dart.git
+transformers:
+ - polymer:
+     include: web/index.html
