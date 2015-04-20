@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>DSLink - Web Browser</title>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <link rel="import" href="packages/polymer/polymer.html">
+
   <link rel="import" href="packages/core_elements/core_animated_pages.html">
   <link rel="import" href="packages/core_elements/core_pages.html">
   <link rel="import" href="packages/paper_elements/paper_tabs.html">
@@ -21,53 +23,105 @@
       height: 100%;
       display: block;
     }
-
+    
     core-header-panel /deep/ #dropShadow {
       box-shadow: inset 0 5px 6px -3px rgba(0, 0, 0, 0.26);
       height: 60px;
     }
-
+    
     core-toolbar {
       background-color: #3f51b5;
       color: white;
     }
-
+    
     .content {
       display: block;
       padding-top: 100px;
       height: 100%;
     }
-
+    
     paper-spinner {
       margin-top: 6px;
       width: 25px;
       height: 25px;
     }
-
+    
     paper-spinner.red::shadow .circle {
       border-color: #db4437;
     }
-
+    
     paper-checkbox {
       padding: 20px 20px 20px 0;
+    }
+    
+    .box {
+      margin: 20px;
+      padding: 20px 20px;
+      border-radius: 20px;
+      background-color: #eee;
+      width: 250px;
+      text-align: center;
     }
   </style>
 </head>
 
 <body unresolved fullbleed layout vertical>
 
-<core-header-panel flex mode="standard">
-  <core-toolbar>
-    <div flex id="main-title">Web Browser Link</div>
-    <div horizontal layout end-justified>
-      <paper-icon-button icon="settings" title="settings" id="settings-btn"></paper-icon-button>
-    </div>
-  </core-toolbar>
-  <div class="content">
-  </div>
-</core-header-panel>
+  <template id="main-template" is="auto-binding-dart">
+    <paper-dialog heading="Settings" backdrop="true" transition="core-transition-center" autofocus id="settings-dialog">
+      <core-label center horizontal layout>
+        <div vertical layout>
+          <h4>&nbsp;Broker</h4>
+        </div>
+        <paper-input id="setting-broker" for></paper-input>
+      </core-label>
+      
+      <div horizontal end-justified layout>
+        <paper-button dismissive on-click="{{closeSettings}}">Save</paper-button>
+      </div>
+    </paper-dialog>
 
-<script type="application/dart" src="index.dart"></script>
-<script src="packages/browser/dart.js"></script>
+    <core-header-panel flex mode="standard">
+      <core-toolbar>
+        <div flex id="main-title">Web Browser Link</div>
+        <div horizontal layout end-justified>
+          <paper-icon-button icon="settings" title="settings" on-click="{{openSettings}}"></paper-icon-button>
+        </div>
+      </core-toolbar>
+      <div class="content" flex horizontal around-justified wrap layout center>
+        <div class="box">
+          <h2>Latitude: {{latitude}}</h2>
+        </div>
+        
+        <div class="box">
+          <h2>Longitude: {{longitude}}</h2>
+        </div>
+        
+        <div id="heading-box" class="box">
+          <h2>Heading: {{heading}}</h2>
+        </div>
+        
+        <div id="speed-box" class="box">
+          <h2>Speed: {{speed}}</h2>
+        </div>
+        
+        <div id="alpha-box" hidden class="box">
+          <h2>Alpha: {{alpha}}</h2>
+        </div>
+        
+        <div id="beta-box" hidden class="box">
+          <h2>Beta: {{beta}}</h2>
+        </div>
+        
+        <div id="gamma-box" hidden class="box">
+          <h2>Gamma: {{gamma}}</h2>
+        </div>
+      </div>
+    </core-header-panel>
+  </template>
+
+  <script type="application/dart" src="index.dart"></script>
+  <script src="packages/browser/dart.js"></script>
 </body>
+
 </html>
