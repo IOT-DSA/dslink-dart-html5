@@ -76,10 +76,6 @@ initialize() async {
         r"$type": "number",
         "?value": 0.0
       }
-    },
-    "Battery Level": {
-      r"$type": "number",
-      "?value": 100.0
     }
   };
 
