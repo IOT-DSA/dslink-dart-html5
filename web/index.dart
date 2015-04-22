@@ -8,7 +8,7 @@ import "package:polymer/polymer.dart";
 
 import "package:paper_elements/paper_dialog.dart";
 
-const String DEFAULT_BROKER = "http://162.216.222.179:8080/conn";
+const String DEFAULT_BROKER = "http://127.0.0.1:8080/conn";
 
 BrowserECDHLink link;
 SimpleNode latitudeNode;
@@ -160,6 +160,10 @@ initialize() async {
 }
 
 connect() async {
+  if (link != null) {
+    link.close();
+  }
+
   link = new BrowserECDHLink(
     currentBroker,
     "WebBrowser-",

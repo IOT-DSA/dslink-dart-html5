@@ -4,7 +4,7 @@ packages:
   analyzer:
     description: analyzer
     source: hosted
-    version: "0.24.5"
+    version: "0.24.6"
   args:
     description: args
     source: hosted
@@ -40,15 +40,11 @@ packages:
   core_elements:
     description: core_elements
     source: hosted
-    version: "0.7.0"
+    version: "0.7.1+2"
   csslib:
     description: csslib
     source: hosted
     version: "0.12.0"
-  custom_element_apigen:
-    description: custom_element_apigen
-    source: hosted
-    version: "0.1.6"
   dart_style:
     description: dart_style
     source: hosted
@@ -56,7 +52,7 @@ packages:
   dslink:
     description:
       ref: null
-      resolved-ref: ee88c5fea7109dfda70feb7fabf7000df8f4eac7
+      resolved-ref: efbff866bbf375045a4a615e86c978a76c319032
       url: "https://github.com/IOT-DSA/sdk-dslink-dart.git"
     source: git
     version: "1.0.0"
@@ -91,7 +87,7 @@ packages:
   paper_elements:
     description: paper_elements
     source: hosted
-    version: "0.7.0"
+    version: "0.7.1"
   path:
     description: path
     source: hosted
@@ -99,11 +95,15 @@ packages:
   polymer:
     description: polymer
     source: hosted
-    version: "0.16.1+3"
+    version: "0.16.1+4"
   polymer_expressions:
     description: polymer_expressions
     source: hosted
     version: "0.13.1"
+  polymer_interop:
+    description: polymer_interop
+    source: hosted
+    version: "0.1.0+2"
   pool:
     description: pool
     source: hosted
@@ -147,7 +147,7 @@ packages:
   web_components:
     description: web_components
     source: hosted
-    version: "0.11.1+3"
+    version: "0.11.2"
   when:
     description: when
     source: hosted
