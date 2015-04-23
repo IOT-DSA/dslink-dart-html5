@@ -67,22 +67,28 @@
 </head>
 
 <body unresolved fullbleed layout vertical>
-
-  <template id="main-template" is="auto-binding-dart">
-    <paper-dialog heading="Settings" backdrop="true" transition="core-transition-center" autofocus id="settings-dialog">
+ <paper-dialog heading="Settings" backdrop="true" transition="core-transition-center" autofocus id="settings-dialog">
       <core-label center horizontal layout>
         <div vertical layout>
-          <h4>&nbsp;Broker</h4>
+          <h4>&nbsp;&nbsp;&nbsp;Name</h4>
+        </div>
+        <paper-input id="setting-name" for></paper-input>
+      </core-label>
+
+      <core-label center horizontal layout>
+        <div vertical layout>
+          <h4>&nbsp;&nbsp;&nbsp;Broker</h4>
         </div>
         <paper-input id="setting-broker" for></paper-input>
       </core-label>
 
       <div horizontal end-justified layout>
-        <paper-button dismissive on-click="{{closeSettings}}">Save</paper-button>
+        <paper-button dismissive id="save-button">Save</paper-button>
       </div>
     </paper-dialog>
 
-    <core-header-panel flex mode="standard">
+ <template id="main-template" is="auto-binding-dart">
+ <core-header-panel flex mode="standard">
       <core-toolbar>
         <div flex id="main-title">Web Browser Link</div>
         <div horizontal layout end-justified>
@@ -119,7 +125,7 @@
         </div>
       </div>
     </core-header-panel>
-  </template>
+ </template>
 
   <script type="application/dart" src="index.dart"></script>
   <script src="packages/browser/dart.js"></script>

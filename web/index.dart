@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:html";
 
 import "package:dslink/browser_client.dart";
@@ -7,8 +8,10 @@ import "package:dslink/src/crypto/pk.dart";
 import "package:polymer/polymer.dart";
 
 import "package:paper_elements/paper_dialog.dart";
+import "package:paper_elements/paper_input.dart";
 
 const String DEFAULT_BROKER = "http://127.0.0.1:8080/conn";
+const String DEFAULT_NAME = "HTML5";
 
 BrowserECDHLink link;
 SimpleNode latitudeNode;
@@ -38,6 +41,10 @@ initialize() async {
   model = new LinkModel();
   AutoBindingElement mainTemplate = querySelector("#main-template");
   mainTemplate.model = model;
+
+  querySelector("#save-button").onClick.listen((x) {
+    model.closeSettings();
+  });
 
   var defaultNodes = {
     "Geolocation": {
@@ -89,6 +96,12 @@ initialize() async {
     currentBroker = window.localStorage["broker_url"];
   } else {
     currentBroker = DEFAULT_BROKER;
+  }
+
+  if (window.localStorage.containsKey("link_name")) {
+    currentName = window.localStorage["link_name"];
+  } else {
+    currentName = DEFAULT_NAME;
   }
 
   provider.init(defaultNodes);
@@ -157,6 +170,17 @@ initialize() async {
       querySelector("#gamma-box").hidden = true;
     }
   });
+
+  var brokerElement = querySelector("#setting-broker") as PaperInput;
+  model.settingBroker = brokerElement;
+  if (brokerElement != null) {
+    brokerElement.value = currentBroker;
+  }
+  var nameElement = querySelector("#setting-name") as PaperInput;
+  if (nameElement != null) {
+    nameElement.value = currentName;
+  }
+  model.settingName = nameElement;
 }
 
 connect() async {
@@ -166,7 +190,7 @@ connect() async {
 
   link = new BrowserECDHLink(
     currentBroker,
-    "WebBrowser-",
+    "${currentName}-",
     key,
     isResponder: true,
     isRequester: false,
@@ -177,6 +201,7 @@ connect() async {
 }
 
 String currentBroker;
+String currentName;
 
 class LinkModel extends Observable {
   @observable
@@ -201,19 +226,24 @@ class LinkModel extends Observable {
   String gamma = "Unknown";
 
   void openSettings() {
-    var dialog = querySelector("#settings-dialog") as PaperDialog;
-    dialog.toggle();
+    dialog = querySelector("#settings-dialog") as PaperDialog;
+    dialog.open();
   }
 
-  void closeSettings() {
-    var dialog = querySelector("#settings-dialog") as PaperDialog;
-    dialog.toggle();
+  PaperDialog dialog;
+  PaperInput settingName;
+  PaperInput settingBroker;
 
-    var settingBroker = querySelector("#setting-broker");
+  void closeSettings() {
+    dialog.close();
+
     var broker = settingBroker.value;
-    if (currentBroker != broker) {
+    var name = settingName.value;
+    if (currentBroker != broker || currentName != name) {
       currentBroker = broker;
+      currentName = name;
       window.localStorage["broker_url"] = currentBroker;
+      window.localStorage["link_name"] = currentName;
       connect();
     }
   }
