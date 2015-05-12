@@ -48,11 +48,11 @@ packages:
   dart_style:
     description: dart_style
     source: hosted
-    version: "0.1.7"
+    version: "0.1.8"
   dslink:
     description:
       ref: null
-      resolved-ref: efbff866bbf375045a4a615e86c978a76c319032
+      resolved-ref: "2e8aa2e436938331530276c55fd6521491916400"
       url: "https://github.com/IOT-DSA/sdk-dslink-dart.git"
     source: git
     version: "1.0.0"
@@ -71,7 +71,7 @@ packages:
   initialize:
     description: initialize
     source: hosted
-    version: "0.6.0+4"
+    version: "0.6.0+5"
   logging:
     description: logging
     source: hosted
@@ -95,7 +95,7 @@ packages:
   polymer:
     description: polymer
     source: hosted
-    version: "0.16.1+4"
+    version: "0.16.2"
   polymer_expressions:
     description: polymer_expressions
     source: hosted
@@ -147,7 +147,7 @@ packages:
   web_components:
     description: web_components
     source: hosted
-    version: "0.11.2"
+    version: "0.11.3+1"
   when:
     description: when
     source: hosted

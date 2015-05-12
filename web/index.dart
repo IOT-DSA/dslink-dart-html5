@@ -1,6 +1,7 @@
 import "dart:async";
 import "dart:html";
 
+import "package:dslink/common.dart";
 import "package:dslink/browser_client.dart";
 import "package:dslink/responder.dart";
 import "package:dslink/src/crypto/pk.dart";
@@ -9,6 +10,7 @@ import "package:polymer/polymer.dart";
 
 import "package:paper_elements/paper_dialog.dart";
 import "package:paper_elements/paper_input.dart";
+import "package:core_elements/core_overlay.dart";
 
 const String DEFAULT_BROKER = "http://127.0.0.1:8080/conn";
 const String DEFAULT_NAME = "HTML5";
@@ -28,6 +30,9 @@ SimpleNodeProvider provider = new SimpleNodeProvider();
 LinkModel model;
 PrivateKey key;
 
+CoreOverlay textDisplayOverlay;
+ParagraphElement textDisplayText;
+
 main() async {
   var zone = await initPolymer();
   await zone.run(() async {
@@ -45,6 +50,9 @@ initialize() async {
   querySelector("#save-button").onClick.listen((x) {
     model.closeSettings();
   });
+
+  textDisplayOverlay = querySelector("#text-display");
+  textDisplayText = querySelector("#text");
 
   var defaultNodes = {
     "Geolocation": {
@@ -81,6 +89,25 @@ initialize() async {
       "Gamma": {
         r"$type": "number",
         "?value": 0.0
+      }
+    },
+    "Text_Display": {
+      r"$name": "Text Display",
+      "Visible": {
+        r"$type": "bool",
+        r"$writable": "write",
+        "?value": false
+      },
+      "Text_Size": {
+        r"$name": "Text Size",
+        r"$type": "number",
+        r"$writable": "write"
+      },
+      "Text": {
+        r"$name": "Text",
+        r"$type": "string",
+        r"$writable": "write",
+        "?value": ""
       }
     }
   };
@@ -145,7 +172,15 @@ initialize() async {
     }
   });
 
+  int lastUpdate = -1;
+
   window.on["deviceorientation"].listen((DeviceOrientationEvent event) {
+    if (lastUpdate != -1 && new DateTime.now().millisecondsSinceEpoch - 300 < lastUpdate) {
+      return;
+    }
+
+    lastUpdate = new DateTime.now().millisecondsSinceEpoch;
+
     if (event.alpha != null) {
       alphaNode.updateValue(event.alpha);
       model.alpha = event.alpha.toStringAsFixed(7);
@@ -181,6 +216,25 @@ initialize() async {
     nameElement.value = currentName;
   }
   model.settingName = nameElement;
+
+  provider.getNode("/Text_Display/Visible").subscribe((ValueUpdate update) {
+    if (update.value) {
+      textDisplayOverlay.open();
+    } else {
+      textDisplayOverlay.close();
+    }
+  });
+
+  var textSizeNode = provider.getNode("/Text_Display/Text_Size");
+  textSizeNode.subscribe((ValueUpdate update) {
+    textDisplayText.style.fontSize = "${update.value}px";
+  });
+  var fs = textDisplayText.style.fontSize;
+  fs = fs.replaceAll("px", "");
+  textSizeNode.updateValue(num.parse(fs, (_) => 12));
+  provider.getNode("/Text_Display/Text").subscribe((ValueUpdate update) {
+    textDisplayText.text = update.value.toString();
+  });
 }
 
 connect() async {
