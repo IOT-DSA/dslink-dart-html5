@@ -189,7 +189,7 @@ initialize() async {
       querySelector("#speed-box").hidden = true;
     }
   });
-  
+
   window.on["deviceorientation"].listen((DeviceOrientationEvent event) {
     if (event.alpha != null) {
       alphaNode.updateValue(event.alpha);
