@@ -106,6 +106,17 @@
     </div>
   </paper-dialog>
 
+  <paper-dialog heading="Reply" backdrop="true" transition="core-transition-center" autofocus id="reply-dialog">
+    <div vertical layout center-justified>
+      <paper-input id="reply-value" label="Message" for floatingLabel></paper-input>
+    </div>
+
+    <div horizontal end-justified layout>
+      <paper-button dismissive id="reply-send-button">Send</paper-button>
+      <paper-button dismissive id="reply-close-button">Close</paper-button>
+    </div>
+  </paper-dialog>
+
   <core-overlay id="text-display" class="dialog" layered backdrop transition="core-transition-center">
     <style no-shim>
       .dialog {
@@ -135,6 +146,7 @@
       <core-toolbar>
         <div flex id="main-title">Web Browser Link</div>
         <div horizontal layout end-justified>
+          <paper-icon-button icon="reply" title="reply" on-click="{{openReplyDialog}}"></paper-icon-button>
           <paper-icon-button icon="settings" title="settings" on-click="{{openSettings}}"></paper-icon-button>
         </div>
       </core-toolbar>

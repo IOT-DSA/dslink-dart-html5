@@ -4,6 +4,7 @@ import "package:dslink/common.dart";
 import "package:dslink/browser_client.dart";
 import "package:dslink/responder.dart";
 import "package:dslink/src/crypto/pk.dart";
+import "package:dslink/utils.dart";
 
 import "package:polymer/polymer.dart";
 
@@ -42,6 +43,11 @@ main() async {
 }
 
 initialize() async {
+  if (window.localStorage.containsKey("log_level")) {
+    var l = window.localStorage["log_level"];
+    updateLogLevel(l);
+  }
+
   model = new LinkModel();
   AutoBindingElement mainTemplate = querySelector("#main-template");
   mainTemplate.model = model;
@@ -50,10 +56,23 @@ initialize() async {
     model.closeSettings();
   });
 
+  querySelector("#reply-send-button").onClick.listen((x) {
+    model.sendReply();
+    model.closeReplyDialog();
+  });
+
+  querySelector("#reply-close-button").onClick.listen((x) {
+    model.closeReplyDialog();
+  });
+
   textDisplayOverlay = querySelector("#text-display");
   textDisplayText = querySelector("#text");
 
   var defaultNodes = {
+    "Message": {
+      r"$type": "string",
+      "?value": ""
+    },
     "Geolocation": {
       "Latitude": {
         r"$type": "number",
@@ -171,14 +190,15 @@ initialize() async {
     }
   });
 
-  int lastUpdate = -1;
+  DateTime lastUpdate;
 
   window.on["deviceorientation"].listen((DeviceOrientationEvent event) {
-    if (lastUpdate != -1 && new DateTime.now().millisecondsSinceEpoch - 300 < lastUpdate) {
+    var now = new DateTime.now();
+    if (lastUpdate != null && lastUpdate.difference(now).abs().inMilliseconds < 300) {
       return;
     }
 
-    lastUpdate = new DateTime.now().millisecondsSinceEpoch;
+    lastUpdate = now;
 
     if (event.alpha != null) {
       alphaNode.updateValue(event.alpha);
@@ -216,6 +236,9 @@ initialize() async {
   }
   model.settingName = nameElement;
 
+  var replyElement = querySelector("#reply-value") as PaperInput;
+  model.replyInput = replyElement;
+
   provider.getNode("/Text_Display/Visible").subscribe((ValueUpdate update) {
     if (update.value) {
       textDisplayOverlay.open();
@@ -245,8 +268,6 @@ connect() async {
     currentBroker,
     "${currentName}-",
     key,
-    isResponder: true,
-    isRequester: false,
     nodeProvider: provider
   );
 
@@ -283,9 +304,24 @@ class LinkModel extends Observable {
     dialog.open();
   }
 
+  void openReplyDialog() {
+    replyDialog = querySelector("#reply-dialog") as PaperDialog;
+    replyDialog.open();
+  }
+
   PaperDialog dialog;
+  PaperDialog replyDialog;
   PaperInput settingName;
   PaperInput settingBroker;
+  PaperInput replyInput;
+
+  void sendReply() {
+    provider.updateValue("/Message", replyInput.value);
+  }
+
+  void closeReplyDialog() {
+    replyDialog.close();
+  }
 
   void closeSettings() {
     dialog.close();
