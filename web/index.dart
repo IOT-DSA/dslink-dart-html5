@@ -1,10 +1,6 @@
 import "dart:html";
 
-import "package:dslink/common.dart";
-import "package:dslink/browser_client.dart";
-import "package:dslink/responder.dart";
-import "package:dslink/src/crypto/pk.dart";
-import "package:dslink/utils.dart";
+import "package:dslink/browser.dart";
 
 import "package:polymer/polymer.dart";
 
@@ -15,7 +11,7 @@ import "package:core_elements/core_overlay.dart";
 const String DEFAULT_BROKER = "http://127.0.0.1:8080/conn";
 const String DEFAULT_NAME = "HTML5";
 
-BrowserECDHLink link;
+LinkProvider link;
 SimpleNode latitudeNode;
 SimpleNode longitudeNode;
 SimpleNode headingNode;
@@ -25,13 +21,13 @@ SimpleNode alphaNode;
 SimpleNode betaNode;
 SimpleNode gammaNode;
 SimpleNode batteryNode;
-SimpleNodeProvider provider = new SimpleNodeProvider();
 
 LinkModel model;
 PrivateKey key;
 
 CoreOverlay textDisplayOverlay;
 ParagraphElement textDisplayText;
+SimpleNodeProvider provider = new SimpleNodeProvider();
 
 main() async {
   var zone = await initPolymer();
@@ -149,7 +145,9 @@ initialize() async {
     currentName = DEFAULT_NAME;
   }
 
-  provider.init(defaultNodes);
+  link = new LinkProvider(currentBroker, "${currentName}-", defaultNodes: defaultNodes, provider: provider);
+
+  await link.init();
 
   latitudeNode = provider.getNode("/Geolocation/Latitude");
   longitudeNode = provider.getNode("/Geolocation/Longitude");
@@ -259,17 +257,10 @@ initialize() async {
 }
 
 connect() async {
-  if (link != null) {
-    link.close();
-  }
-
-  link = new BrowserECDHLink(
-    currentBroker,
-    "${currentName}-",
-    key,
-    nodeProvider: provider
-  );
-
+  link.close();
+  link.brokerUrl = currentBroker;
+  link.prefix = "${currentName}-";
+  await link.init();
   link.connect();
 }
 

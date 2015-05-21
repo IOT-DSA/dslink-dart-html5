@@ -6,6 +6,8 @@ This is a DSLink for HTML5.
 
 - Location Information
 - Accelerometer Data
+- Text Display Dialog
+- Message Input
 
 ## Usage
 

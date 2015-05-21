@@ -1,5 +1,5 @@
-name: dslink_web_browser
-description: Web Browser DSLink
+name: dslink_html5
+description: HTML5 DSLink
 dependencies:
   core_elements: ">=0.7.0 <0.8.0"
   paper_elements: ">=0.7.0 <0.8.0"
