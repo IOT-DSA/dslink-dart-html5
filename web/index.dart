@@ -1,11 +1,9 @@
-import "dart:async";
-import "dart:html" hide Worker;
+import "dart:html";
 
 import "package:dslink/common.dart";
 import "package:dslink/browser_client.dart";
 import "package:dslink/responder.dart";
 import "package:dslink/src/crypto/pk.dart";
-import "package:dslink/worker.dart";
 
 import "package:polymer/polymer.dart";
 
@@ -44,13 +42,6 @@ main() async {
 }
 
 initialize() async {
-  WorkerSocket worker = createWorkerScript("worker.dart");
-  await worker.init();
-  await worker.callMethod("hello");
-  var content = await worker.callMethod("fetch", "https://gist.githubusercontent.com/kaendfinger/66ca92b591c1f46311ec/raw/d265c3bd03fb5a17405e027f55a8f31ab13a9bd9/test_addon.dart");
-
-  print("Got Gist Content: ${content}");
-
   model = new LinkModel();
   AutoBindingElement mainTemplate = querySelector("#main-template");
   mainTemplate.model = model;

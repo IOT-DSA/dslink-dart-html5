@@ -28,7 +28,7 @@ packages:
   cli_util:
     description: cli_util
     source: hosted
-    version: "0.0.1+1"
+    version: "0.0.1+2"
   code_transformers:
     description: code_transformers
     source: hosted
@@ -52,7 +52,7 @@ packages:
   dslink:
     description:
       ref: null
-      resolved-ref: "931300dd14da87673e3fa9165cd2e778892f6e30"
+      resolved-ref: e8fcd7787ff8fa6905e4c75ac24d1eec7c5b4c62
       url: "https://github.com/IOT-DSA/sdk-dslink-dart.git"
     source: git
     version: "1.0.0"
