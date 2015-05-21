@@ -239,6 +239,14 @@ initialize() async {
   var replyElement = querySelector("#reply-value") as PaperInput;
   model.replyInput = replyElement;
 
+  textDisplayOverlay.on["core-overlay-open-completed"].listen((_) =>
+    provider.updateValue("/Text_Display/Visible", true)
+  );
+
+  textDisplayOverlay.on["core-overlay-close-completed"].listen((_) =>
+    provider.updateValue("/Text_Display/Visible", false)
+  );
+
   provider.getNode("/Text_Display/Visible").subscribe((ValueUpdate update) {
     if (update.value) {
       textDisplayOverlay.open();
