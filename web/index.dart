@@ -189,17 +189,8 @@ initialize() async {
       querySelector("#speed-box").hidden = true;
     }
   });
-
-  DateTime lastUpdate;
-
+  
   window.on["deviceorientation"].listen((DeviceOrientationEvent event) {
-    var now = new DateTime.now();
-    if (lastUpdate != null && lastUpdate.difference(now).abs().inMilliseconds < 300) {
-      return;
-    }
-
-    lastUpdate = now;
-
     if (event.alpha != null) {
       alphaNode.updateValue(event.alpha);
       model.alpha = event.alpha.toStringAsFixed(7);
