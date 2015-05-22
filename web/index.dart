@@ -8,7 +8,7 @@ import "package:paper_elements/paper_dialog.dart";
 import "package:paper_elements/paper_input.dart";
 import "package:core_elements/core_overlay.dart";
 
-String DEFAULT_BROKER:
+String DEFAULT_BROKER;
 
 const String DEFAULT_NAME = "HTML5";
 
