@@ -8,7 +8,8 @@ import "package:paper_elements/paper_dialog.dart";
 import "package:paper_elements/paper_input.dart";
 import "package:core_elements/core_overlay.dart";
 
-const String DEFAULT_BROKER = "http://127.0.0.1:8080/conn";
+String DEFAULT_BROKER:
+
 const String DEFAULT_NAME = "HTML5";
 
 LinkProvider link;
@@ -30,6 +31,7 @@ ParagraphElement textDisplayText;
 SimpleNodeProvider provider = new SimpleNodeProvider();
 
 main() async {
+  DEFAULT_BROKER = await BrowserUtils.fetchBrokerUrlFromPath("broker_url", "http://127.0.0.1:8080/conn");
   var zone = await initPolymer();
   await zone.run(() async {
     await Polymer.onReady;

@@ -8,7 +8,7 @@ packages:
   args:
     description: args
     source: hosted
-    version: "0.13.0"
+    version: "0.13.1"
   barback:
     description: barback
     source: hosted
@@ -52,7 +52,7 @@ packages:
   dslink:
     description:
       ref: null
-      resolved-ref: "7c6abe656e072aac4c48121c49109507dcdee0dd"
+      resolved-ref: "17b10620e0005f759fdd699ea25f1c1ccf796e24"
       url: "https://github.com/IOT-DSA/sdk-dslink-dart.git"
     source: git
     version: "1.0.0"
@@ -79,7 +79,7 @@ packages:
   matcher:
     description: matcher
     source: hosted
-    version: "0.12.0"
+    version: "0.12.0+1"
   observe:
     description: observe
     source: hosted
