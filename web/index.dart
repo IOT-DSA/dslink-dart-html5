@@ -131,7 +131,7 @@ initialize() async {
   if (window.localStorage.containsKey("dsa_key")) {
     key = new PrivateKey.loadFromString(window.localStorage["dsa_key"]);
   } else {
-    key = new PrivateKey.generate();
+    key = await PrivateKey.generate();
     window.localStorage["dsa_key"] = key.saveToString();
   }
 
