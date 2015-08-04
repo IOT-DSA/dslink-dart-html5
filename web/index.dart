@@ -31,7 +31,7 @@ ParagraphElement textDisplayText;
 SimpleNodeProvider provider = new SimpleNodeProvider();
 
 main() async {
-  DEFAULT_BROKER = await BrowserUtils.fetchBrokerUrlFromPath("broker_url", "http://127.0.0.1:8080/conn");
+  DEFAULT_BROKER = await BrowserUtils.fetchBrokerUrlFromPath("broker_url", "http://localhost:8080/conn");
   var zone = await initPolymer();
   await zone.run(() async {
     await Polymer.onReady;
