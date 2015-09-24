@@ -24,7 +24,6 @@ SimpleNode gammaNode;
 SimpleNode batteryNode;
 
 LinkModel model;
-PrivateKey key;
 
 CoreOverlay textDisplayOverlay;
 ParagraphElement textDisplayText;
@@ -127,13 +126,6 @@ initialize() async {
       }
     }
   };
-
-  if (window.localStorage.containsKey("dsa_key")) {
-    key = new PrivateKey.loadFromString(window.localStorage["dsa_key"]);
-  } else {
-    key = await PrivateKey.generate();
-    window.localStorage["dsa_key"] = key.saveToString();
-  }
 
   if (window.localStorage.containsKey("broker_url")) {
     currentBroker = window.localStorage["broker_url"];
