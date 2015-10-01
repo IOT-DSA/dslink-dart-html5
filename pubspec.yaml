@@ -1,12 +1,10 @@
 name: dslink_html5
 description: HTML5 DSLink
 dependencies:
-  core_elements: ">=0.7.1 <0.8.0"
-  paper_elements: ">=0.7.1 <0.8.0"
-  polymer: "^0.16.3+3"
+  mdl: "^1.5.6"
   dslink:
     git: https://github.com/IOT-DSA/sdk-dslink-dart.git
+  di: any
+
 transformers:
- - polymer:
-     entry_points:
-      - web/index.html
+  - di
