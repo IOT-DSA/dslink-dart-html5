@@ -17,7 +17,8 @@
             width: 100%;
         }
         .box {
-            margin: 20px;
+            font-size: 20px;
+            margin: 15px;
             padding: 20px 20px;
             border-radius: 20px;
             background-color: #eee;
@@ -27,16 +28,16 @@
     </style>
 </head>
 <body class="mdl-upgrading" >
-<div class="mdl-layout mdl-js-layout">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <!--<div class="mdl-layout-icon"></div> -->
         <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Simple Layout</span>
+            <span class="mdl-layout-title">Web Browser Link</span>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation">
                 <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="replybtn">
-                    <i class="material-icons">reply</i
-                ></button>
+                    <i class="material-icons">reply</i>
+                </button>
                 <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="settingsbtn">
                     <i class="material-icons">settings</i>
                 </button>
@@ -45,13 +46,13 @@
     </header>
     <main class="mdl-layout__content">
         <div class="mdl-grid">
-            <div class="mdl-cell box mdl-content mdl-js-content" id="latitude"></div>
-            <div class="mdl-cell box mdl-content mdl-js-content" id="longitude"></div>
-            <div class="mdl-cell box mdl-content mdl-js-content" id="heading" hidden></div>
-            <div class="mdl-cell box mdl-content mdl-js-content" id="speed" hidden></div>
-            <div class="mdl-cell box mdl-content mdl-js-content" id="alpha" hidden></div>
-            <div class="mdl-cell box mdl-content mdl-js-content" id="beta" hidden></div>
-            <div class="mdl-cell box mdl-content mdl-js-content" id="gamma" hidden></div>
+            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="latitude"></div>
+            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="longitude"></div>
+            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="heading" hidden></div>
+            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="speed" hidden></div>
+            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="alpha" hidden></div>
+            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="beta" hidden></div>
+            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="gamma" hidden></div>
         </div>
     </main>
 </div>
