@@ -266,7 +266,7 @@ class Html5Model {
     });
     gamma.onChange.listen((event) {
       _checkVisibility(gammaContent, event.value);
-      gammaContent.text = 'Longitude: ${event.value}';
+      gammaContent.text = 'Gamma: ${event.value}';
     });
   }
 
