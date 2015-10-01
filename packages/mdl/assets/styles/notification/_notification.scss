@@ -1,0 +1,223 @@
+//---
+// Copyright (c) 2015, Michael Mitterer (office@mikemitterer.at),
+// IT-Consulting and Development Limited.
+//
+// All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+@import "../variables";
+@import "../typography/mixins";
+
+//$notification-baseline-grid:            8px !default;
+//$notification-swift-ease-out-duration : 0.2s !default;
+//
+//$notification-height: $notification-baseline-grid * 3 !default;
+//$notification-margin: $notification-baseline-grid * 1 !default;
+
+$notification-swift-ease-in-duration: 1s !default;
+$notification-swift-ease-in-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2) !default;
+$notification-swift-ease-in: all $notification-swift-ease-in-duration $notification-swift-ease-in-timing-function !default;
+
+$notification-swift-ease-out-duration : 1s !default;
+$notification-swift-ease-out-timing-function : cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+$notification-swift-ease-out : all $notification-swift-ease-out-duration $notification-swift-ease-out-timing-function !default;
+
+$notification-z-index: 90 !default;
+
+//$notification-layout-breakpoint-sm:     600px !default;
+//
+//$notification-color: invert($text-color-primary) !default;
+//$notification-button-color: nth($palette-accent, 5) !default;
+//$notification-background: nth($palette-grey, 9) !default;
+
+$notification-container-z-index: 3; // mdl-layout__drawer: 5
+$notification-container-width: 336px;
+
+$notification-width: $notification-container-width - 12px;
+
+$notification-baseline-grid : 8px !default;
+
+$notification-color-debug: $palette-light-green-300 !default;
+$notification-color-info: $palette-blue-400 !default;
+$notification-color-warning: $palette-orange-500 !default;
+$notification-color-error: $palette-red-900 !default;
+
+$notification-color-subtitle: $palette-grey-500 !default;
+
+.mdl-notification-container {
+    z-index: $notification-container-z-index;
+    position: absolute;
+    right : 12px;
+    top: 12px;
+    //bottom: 12px;
+    min-width: $notification-container-width;
+    max-width: $notification-container-width;;
+    max-height: calc(100vh - 12px);
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start; // ↓
+    align-content: space-between; // =
+    align-items: center; // ⇾
+
+    overflow : scroll;
+
+    &.is-visible {
+        background-color: rgba(0, 0, 0, 0);
+        visibility: visible;
+
+        .mdl-notification {
+            opacity    : 1;
+            transition : $notification-swift-ease-in;
+            //transform  : translate3d(0, 0, 0) scale(1.0);
+        }
+    }
+
+    &.is-hidden {
+        .mdl-notification {
+            // hidden
+            opacity    : 0;
+            transition     : $notification-swift-ease-out;
+            //transform      : translate3d(0, 100%, 0) scale(0.2);
+        }
+    }
+
+    .mdl-notification {
+        position: relative;
+        box-sizing: border-box;
+        background-color: white;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start; // ↓
+        align-content: space-between; // =
+        align-items: flex-start; // ⇾
+        flex-shrink: 0;  // min-height bug
+
+        min-height: 48px;
+        min-width: $notification-width;
+        max-width: $notification-width;
+        width: $notification-width;
+
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+
+        border: 1px solid #eaeaea;
+        border-radius: 2px;
+        font-size: 14px;
+        cursor: default;
+
+        margin-bottom: 12px;
+
+        h1,h2,h3,h4,h5,h6 { margin-top: 0; margin-bottom: 0; }
+
+        h1 { @include typo-headline($usePreferred: true); }
+        h2,h3,h4,h5,h6 { @include typo-subhead($colorContrast: true,$usePreferred: true) }
+
+        &.mdl-notification--debug {
+            .mdl-notification__avatar { color: $notification-color-debug;  &::before { content: "bug_report"; } }
+        }
+
+        &.mdl-notification--info {
+            .mdl-notification__avatar { color : $notification-color-info; &::before { content : "info"; } }
+        }
+
+        &.mdl-notification--warning {
+            .mdl-notification__avatar { color: $notification-color-warning; &::before { content: "warning"; } }
+        }
+
+        &.mdl-notification--error {
+            .mdl-notification__avatar { color: $notification-color-error; &::before { content: "error"; } }
+        }
+
+        .mdl-notification__close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+
+            font-size: 12px;
+        }
+
+        .mdl-notification__content {
+            font-size: 14px;
+            width: 100%;
+
+            overflow: hidden;
+            word-wrap: break-word;
+
+            .mdl-notification__title {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-start; // ⇾
+                align-content: space-between; // ||
+                align-items: center; // ↓
+
+                .mdl-notification__avatar {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center; // ⇾
+                    align-content: space-between; // ||
+                    align-items: center; // ↓
+
+                    font-size: 50px;
+
+                    min-width: 50px;
+                    max-width: 50px;
+                    min-height: 50px;
+                    max-height: 50px;
+                    // border: 1px solid blue;
+                    // border-radius: 25px;
+
+                    margin-right: 8px;
+                }
+
+                + .mdl-notification__text {
+                    margin-top: 16px;
+                }
+            }
+
+
+
+            .mdl-notification__text {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: flex-start; // ⇾
+                align-content: space-between; // ||
+                align-items: center; // ↓
+
+                .mdl-notification__avatar {
+
+                    vertical-align: middle;
+                    font-size: 50px;
+                    margin-right: 12px;
+
+                    + span {
+                        max-width: $notification-width - 62px;
+                        @include typo-subhead($usePreferred: true);
+
+                    }
+                }
+            }
+
+        }
+    }
+}

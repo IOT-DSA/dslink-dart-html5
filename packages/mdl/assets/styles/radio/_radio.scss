@@ -1,0 +1,11 @@
+/* ==========  Radio Buttons  ========== */
+
+$radio-color: ($color-primary) !default;
+$radio-off-color: ($palette-black-54) !default;
+$radio-disabled-color: ($palette-black-26) !default;
+
+@import "radio.orig";
+
+.mdl-radio {
+    //@include avoid-blue-box-on-double-click();
+}
