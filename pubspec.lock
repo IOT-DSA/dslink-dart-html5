@@ -60,7 +60,7 @@ packages:
   dslink:
     description:
       ref: null
-      resolved-ref: "2cc8d2f77a31bc8a47326b8497c306291f8ebf3e"
+      resolved-ref: "72e2f13470e4cd05e2655546558b2629a6315c3a"
       url: "https://github.com/IOT-DSA/sdk-dslink-dart.git"
     source: git
     version: "1.0.0"
