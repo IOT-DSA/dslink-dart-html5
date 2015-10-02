@@ -95,6 +95,7 @@ class Html5Link {
 
   Html5Model model;
   TextDisplayDialog textDialog;
+  bool firstRun = false;
 
   Html5Link(this.model, this.textDialog) {
     provider = new SimpleNodeProvider();
@@ -110,6 +111,7 @@ class Html5Link {
       currentBroker = dom.window.localStorage["broker_url"];
     } else {
       currentBroker = DEFAULT_BROKER;
+      firstRun = true;
     }
     if (dom.window.localStorage.containsKey("link_name")) {
       currentName = dom.window.localStorage["link_name"];
@@ -210,11 +212,12 @@ class Html5Link {
 
   /// Triggered by OK response to Settings Dialog
   void updateSettings(String broker, String name) {
-    if (currentBroker != broker || currentName != name) {
+    if (currentBroker != broker || currentName != name || firstRun) {
       currentBroker = broker;
       currentName = name;
       dom.window.localStorage["broker_url"] = currentBroker;
       dom.window.localStorage["link_name"] = currentName;
+      firstRun = false;
       connect();
     }
   }
@@ -292,7 +295,6 @@ class Application extends MaterialApplication {
 
   Application() {
     replyDialog = new ReplyDialog();
-    settingsDialog = new SettingsDialog();
     textDialog = new TextDisplayDialog();
   }
 
@@ -320,7 +322,17 @@ class Application extends MaterialApplication {
       });
     });
     await myLink.initialize();
+    settingsDialog = new SettingsDialog(myLink.currentBroker);
     myLink.connect();
+    if(myLink.firstRun) {
+      settingsDialog(title: 'Settings').show().then((MdlDialogStatus status) {
+        if(status == MdlDialogStatus.OK) {
+          var broker = settingsDialog.brokerUrl.value;
+          var name = settingsDialog.linkName.value;
+          myLink.updateSettings(broker, name);
+        }
+      });
+    }
   }
 }
 

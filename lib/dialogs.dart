@@ -74,9 +74,9 @@ class SettingsDialog extends MaterialDialog {
   ObservableProperty<String> linkName;
   ObservableProperty<String> brokerUrl;
 
-  SettingsDialog() : super(new DialogConfig()) {
+  SettingsDialog(String broker) : super(new DialogConfig()) {
     linkName = new ObservableProperty<String>("HTML5");
-    brokerUrl = new ObservableProperty<String>("http://localhost:8080/conn");
+    brokerUrl = new ObservableProperty<String>(broker);
   }
 
   SettingsDialog call({ final String title: "",
