@@ -45,17 +45,53 @@ class Html5Link {
       }
     },
     "Accelerometer": {
-      "Alpha": {
-        r"$type": "number",
-        "?value": 0.0
+      "Orientation": {
+        "Alpha": {
+          r"$type": "number",
+          "?value": 0.0
+        },
+        "Beta": {
+          r"$type": "number",
+          "?value": 0.0
+        },
+        "Gamma": {
+          r"$type": "number",
+          "?value": 0.0
+        }
       },
-      "Beta": {
-        r"$type": "number",
-        "?value": 0.0
-      },
-      "Gamma": {
-        r"$type": "number",
-        "?value": 0.0
+      "Motion" : {
+        "Acceleration": {
+          "X": {
+            r"$type": "number",
+            "?value": 0.0
+          },
+          "Y": {
+            r"$type": "number",
+            "?value": 0.0
+          },
+          "Z": {
+            r"$type": "number",
+            "?value": 0.0
+          }
+        },
+        "RotationRate": {
+          "Alpha": {
+            r"$type": "number",
+            "?value": 0.0
+          },
+          "Beta": {
+            r"$type": "number",
+            "?value": 0.0
+          },
+          "Gamma": {
+            r"$type": "number",
+            "?value": 0.0
+          }
+        },
+        "Interval": {
+          r"$type": "number",
+          "?value": 0.0
+        }
       }
     },
     "Text_Display": {
@@ -90,6 +126,13 @@ class Html5Link {
   SimpleNode alphaNode;
   SimpleNode betaNode;
   SimpleNode gammaNode;
+  SimpleNode accelXNode;
+  SimpleNode accelYNode;
+  SimpleNode accelZNode;
+  SimpleNode rotAlphaNode;
+  SimpleNode rotBetaNode;
+  SimpleNode rotGammaNode;
+  SimpleNode intervalNode;
   SimpleNode batteryNode;
   SimpleNodeProvider provider;
 
@@ -127,9 +170,16 @@ class Html5Link {
     headingNode = provider.getNode("/Geolocation/Heading");
     altitudeNode = provider.getNode("/Geolocation/Altitude");
     speedNode = provider.getNode("/Geolocation/Speed");
-    alphaNode = provider.getNode("/Accelerometer/Alpha");
-    betaNode = provider.getNode("/Accelerometer/Beta");
-    gammaNode = provider.getNode("/Accelerometer/Gamma");
+    alphaNode = provider.getNode("/Accelerometer/Orientation/Alpha");
+    betaNode = provider.getNode("/Accelerometer/Orientation/Beta");
+    gammaNode = provider.getNode("/Accelerometer/Orientation/Gamma");
+    accelXNode = provider.getNode("/Accelerometer/Motion/Acceleration/X");
+    accelYNode = provider.getNode("/Accelerometer/Motion/Acceleration/Y");
+    accelZNode = provider.getNode("/Accelerometer/Motion/Acceleration/Z");
+    rotAlphaNode = provider.getNode("/Accelerometer/Motion/RotationRate/Alpha");
+    rotBetaNode = provider.getNode("/Accelerometer/Motion/RotationRate/Beta");
+    rotGammaNode = provider.getNode("/Accelerometer/Motion/RotationRate/Gamma");
+    intervalNode = provider.getNode("/Accelerometer/Motion/Interval");
 
     dom.window.navigator.geolocation.watchPosition(
         enableHighAccuracy: true,
@@ -139,6 +189,7 @@ class Html5Link {
       print(error.message);
     });
     dom.window.on['deviceorientation'].listen(orientationUpdated);
+    dom.window.on['devicemotion'].listen(motionUpdated);
 
     provider.getNode("/Text_Display/Visible").subscribe((ValueUpdate update) {
       if (update.value) {
@@ -204,6 +255,28 @@ class Html5Link {
     }
   }
 
+  /// Event handler for device motion
+  void motionUpdated(dom.DeviceMotionEvent event) {
+    var accel, rot;
+    if(event.acceleration != null) {
+      accel = event.acceleration;
+      accelXNode.updateValue(accel.x);
+      model.accelX.value = accel.x.toStringAsFixed(2);
+      accelYNode.updateValue(accel.y);
+      model.accelY.value = accel.y.toStringAsFixed(2);
+      accelZNode.updateValue(accel.z);
+      model.accelZ.value = accel.z.toStringAsFixed(2);
+      intervalNode.updateValue(event.interval);
+    }
+    if(event.rotationRate != null) {
+      rot = event.rotationRate;
+      rotAlphaNode.updateValue(rot.alpha);
+      rotBetaNode.updateValue(rot.beta);
+      rotGammaNode.updateValue(rot.gamma);
+    }
+
+  }
+
   /// Triggered by OK response to Message Dialog
   void sendReply(String message) {
     provider.updateValue('/Message', message);
@@ -232,6 +305,9 @@ class Html5Model {
   ObservableProperty<String> alpha = new ObservableProperty<String>("");
   ObservableProperty<String> beta = new ObservableProperty<String>("");
   ObservableProperty<String> gamma = new ObservableProperty<String>("");
+  ObservableProperty<String> accelX = new ObservableProperty<String>("");
+  ObservableProperty<String> accelY = new ObservableProperty<String>("");
+  ObservableProperty<String> accelZ = new ObservableProperty<String>("");
   dom.DivElement latContent;
   dom.DivElement lonContent;
   dom.DivElement headContent;
@@ -239,6 +315,9 @@ class Html5Model {
   dom.DivElement alphaContent;
   dom.DivElement betaContent;
   dom.DivElement gammaContent;
+  dom.DivElement accelXContent;
+  dom.DivElement accelYContent;
+  dom.DivElement accelZContent;
 
   Html5Model() {
     latContent = dom.querySelector('#latitude');
@@ -248,6 +327,9 @@ class Html5Model {
     alphaContent = dom.querySelector('#alpha');
     betaContent = dom.querySelector('#beta');
     gammaContent = dom.querySelector('#gamma');
+    accelXContent = dom.querySelector('#accelX');
+    accelYContent = dom.querySelector('#accelY');
+    accelZContent = dom.querySelector('#accelZ');
 
     latitude.onChange.listen((event) {
       latContent.text = 'Latitude: ${event.value}';
@@ -274,6 +356,18 @@ class Html5Model {
     gamma.onChange.listen((event) {
       _checkVisibility(gammaContent, event.value);
       gammaContent.text = 'Gamma: ${event.value}';
+    });
+    accelX.onChange.listen((event) {
+      _checkVisibility(accelXContent, event.value);
+      accelXContent.text = 'Acceleration X: ${event.value}';
+    });
+    accelY.onChange.listen((event) {
+      _checkVisibility(accelYContent, event.value);
+      accelYContent.text = 'Acceleration Y: ${event.value}';
+    });
+    accelZ.onChange.listen((event) {
+      _checkVisibility(accelZContent, event.value);
+      accelZContent.text = 'Acceleration Z: ${event.value}';
     });
   }
 
