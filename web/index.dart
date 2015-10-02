@@ -186,7 +186,6 @@ class Html5Link {
     if(coords.speed != null) {
       model.speed.value = coords.speed.toStringAsFixed(7);
     }
-    print('Lat & lon Updated');
   }
 
   /// Event handler for device orientation
