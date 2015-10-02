@@ -91,6 +91,17 @@ class SettingsDialog extends MaterialDialog {
   bool get hasTitle => (title != null && title.isNotEmpty);
 
   void onSubmit() {
+    var newUrl = brokerUrl.value;
+    if(!newUrl.endsWith('conn')) {
+      if(newUrl.endsWith('/')) {
+        newUrl = '${newUrl}conn';
+      } else {
+        newUrl = '$newUrl/conn';
+      }
+      brokerUrl.value = newUrl;
+      print('newUrl: $newUrl');
+    }
+
     close(MdlDialogStatus.OK);
   }
 
