@@ -33,7 +33,6 @@ class ReplyDialog extends MaterialDialog {
   bool get hasTitle => (title != null && title.isNotEmpty);
 
   void onSubmit() {
-    print(replyValue.value);
     close(MdlDialogStatus.OK);
   }
 
