@@ -4,7 +4,7 @@ packages:
   analyzer:
     description: analyzer
     source: hosted
-    version: "0.24.6"
+    version: "0.22.4"
   args:
     description: args
     source: hosted
@@ -60,7 +60,7 @@ packages:
   dslink:
     description:
       ref: null
-      resolved-ref: ea1fae49de62a060c6f8f4da93a45a04fe545b95
+      resolved-ref: "2cc8d2f77a31bc8a47326b8497c306291f8ebf3e"
       url: "https://github.com/IOT-DSA/sdk-dslink-dart.git"
     source: git
     version: "1.0.0"
@@ -71,7 +71,7 @@ packages:
   intl:
     description: intl
     source: hosted
-    version: "0.8.10+4"
+    version: "0.11.12"
   logging:
     description: logging
     source: hosted
@@ -84,14 +84,14 @@ packages:
     description: mdl
     source: hosted
     version: "1.5.6"
-  meta:
-    description: meta
-    source: hosted
-    version: "0.8.8"
   path:
     description: path
     source: hosted
     version: "1.3.6"
+  petitparser:
+    description: petitparser
+    source: hosted
+    version: "1.4.3"
   pool:
     description: pool
     source: hosted
@@ -107,7 +107,7 @@ packages:
   source_span:
     description: source_span
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   stack_trace:
     description: stack_trace
     source: hosted
