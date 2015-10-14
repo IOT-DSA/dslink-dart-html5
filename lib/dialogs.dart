@@ -98,9 +98,7 @@ class SettingsDialog extends MaterialDialog {
         newUrl = '$newUrl/conn';
       }
       brokerUrl.value = newUrl;
-      print('newUrl: $newUrl');
     }
-
     close(MdlDialogStatus.OK);
   }
 

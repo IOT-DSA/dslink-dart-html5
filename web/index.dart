@@ -145,12 +145,18 @@ class Html5Link {
   }
 
   Future initialize() async {
-    DEFAULT_BROKER = await BrowserUtils.fetchBrokerUrlFromPath("broker_url", "http://localhost:8080/conn");
+    DEFAULT_BROKER = await BrowserUtils.fetchBrokerUrlFromPath("broker_url",
+        "http://localhost:8080/conn");
+
     if (dom.window.localStorage.containsKey("log_level")) {
       var l = dom.window.localStorage["log_level"];
       updateLogLevel(l);
     }
-    if (dom.window.localStorage.containsKey("broker_url")) {
+    if (dom.window.location.hash.isNotEmpty
+          && dom.window.location.hash.substring(1).isNotEmpty) {
+      var tmpLoc = Uri.decodeFull(dom.window.location.hash.substring(1));
+      currentBroker = tmpLoc;
+    } else if (dom.window.localStorage.containsKey("broker_url")) {
       currentBroker = dom.window.localStorage["broker_url"];
     } else {
       currentBroker = DEFAULT_BROKER;
@@ -258,8 +264,11 @@ class Html5Link {
   /// Event handler for device motion
   void motionUpdated(dom.DeviceMotionEvent event) {
     var accel, rot;
-    if(event.acceleration != null) {
+    if(event.acceleration?.x != null
+        && event.acceleration?.y != null
+        && event.acceleration?.z != null) {
       accel = event.acceleration;
+      print('DEBUG: ${event.acceleration}');
       accelXNode.updateValue(accel.x);
       model.accelX.value = accel.x.toStringAsFixed(2);
       accelYNode.updateValue(accel.y);
@@ -287,6 +296,7 @@ class Html5Link {
     if (currentBroker != broker || currentName != name || firstRun) {
       currentBroker = broker;
       currentName = name;
+      dom.window.location.hash = currentBroker;
       dom.window.localStorage["broker_url"] = currentBroker;
       dom.window.localStorage["link_name"] = currentName;
       firstRun = false;
