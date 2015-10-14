@@ -158,6 +158,7 @@ class Html5Link {
       currentBroker = tmpLoc;
     } else if (dom.window.localStorage.containsKey("broker_url")) {
       currentBroker = dom.window.localStorage["broker_url"];
+      dom.window.location.hash = currentBroker;
     } else {
       currentBroker = DEFAULT_BROKER;
       firstRun = true;
