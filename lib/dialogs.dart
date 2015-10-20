@@ -46,7 +46,7 @@ class ReplyDialog extends MaterialDialog {
           <div class="mdl-dialog__content">
             {{#hasTitle}}<h5>{{title}}</h5>{{/hasTitle}}
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="reply-value" mdl-model="replyDialog.replyValue"/>
+                  <input class="mdl-textfield__input" type="text" id="reply-value" mdl-model="replyValue"/>
                   <label class="mdl-textfield__label" for="reply-value">Message</label>
               </div>
           </div>
@@ -108,11 +108,11 @@ class SettingsDialog extends MaterialDialog {
           <div class="mdl-dialog__content">
             {{#hasTitle}}<h5>{{title}}</h5>{{/hasTitle}}
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="linkname" mdl-model="settingsDialog.linkName"/>
+                  <input class="mdl-textfield__input" type="text" id="linkname" mdl-model="linkName"/>
                   <label class="mdl-textfield__label" for="reply-value">Link Name</label>
               </div>
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="brokerurl" mdl-model="settingsDialog.brokerUrl"/>
+                  <input class="mdl-textfield__input" type="text" id="brokerurl" mdl-model="brokerUrl"/>
                   <label class="mdl-textfield__label" for="reply-value">Broker URL</label>
               </div>
           </div>

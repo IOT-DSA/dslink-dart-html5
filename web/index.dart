@@ -429,6 +429,7 @@ class Application extends MaterialApplication {
     settingsDialog = new SettingsDialog(myLink.currentBroker);
     myLink.connect();
     if(myLink.firstRun) {
+      print('First run');
       settingsDialog(title: 'Settings').show().then((MdlDialogStatus status) {
         if(status == MdlDialogStatus.OK) {
           var broker = settingsDialog.brokerUrl.value;
