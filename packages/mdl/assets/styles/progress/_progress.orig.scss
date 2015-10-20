@@ -21,6 +21,7 @@
   position: relative;
   height: $bar-height;
   width: 500px;
+  max-width: 100%;
 }
 
 .mdl-progress > .bar {
@@ -54,7 +55,7 @@
   .mdl-progress:not(.mdl-progress__indeterminate):not(.mdl-progress__indeterminate) > .auxbar {
     background-image: linear-gradient(to right, $progress-secondary-color, $progress-secondary-color),
       linear-gradient(to right, $progress-main-color, $progress-main-color);
-    mask: url('/images/buffer.svg?embed');
+    mask: url('#{$progress-image-path}/buffer.svg?embed');
   }
 }
 
