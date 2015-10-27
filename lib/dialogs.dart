@@ -79,10 +79,11 @@ class SettingsDialog extends MaterialDialog {
   }
 
   SettingsDialog call({ final String title: "",
-  final String yesButton: _DEFAULT_SUBMIT_BUTTON }) {
+      final String url, final String name}) {
 
     this.title = title;
-    this.yesButton = yesButton;
+    brokerUrl.value = url ?? brokerUrl.value;
+    linkName.value = name ?? linkName.value;
 
     return this;
   }

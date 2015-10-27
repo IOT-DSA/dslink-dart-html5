@@ -14,93 +14,43 @@ import 'package:dslink_html5/dialogs.dart';
 /// Manages the link and nodes to DSLink
 class Html5Link {
   static String DEFAULT_BROKER;
+
   /// Default name for the link
   static const DEFAULT_NAME = "HTML5";
+
   /// Default nodes provided by the link
   static final DEFAULT_NODES = {
-    "Message": {
-      r"$type": "string",
-      "?value": ""
-    },
+    "Message": {r"$type": "string", "?value": ""},
     "Geolocation": {
-      "Latitude": {
-        r"$type": "number",
-        "?value": 0.0
-      },
-      "Longitude": {
-        r"$type": "number",
-        "?value": 0.0
-      },
-      "Heading": {
-        r"$type": "number",
-        "?value": 0.0
-      },
-      "Altitude": {
-        r"$type": "number",
-        "?value": 0.0
-      },
-      "Speed": {
-        r"$type": "number",
-        "?value": 0.0
-      }
+      "Latitude": {r"$type": "number", "?value": 0.0},
+      "Longitude": {r"$type": "number", "?value": 0.0},
+      "Heading": {r"$type": "number", "?value": 0.0},
+      "Altitude": {r"$type": "number", "?value": 0.0},
+      "Speed": {r"$type": "number", "?value": 0.0}
     },
     "Accelerometer": {
       "Orientation": {
-        "Alpha": {
-          r"$type": "number",
-          "?value": 0.0
-        },
-        "Beta": {
-          r"$type": "number",
-          "?value": 0.0
-        },
-        "Gamma": {
-          r"$type": "number",
-          "?value": 0.0
-        }
+        "Alpha": {r"$type": "number", "?value": 0.0},
+        "Beta": {r"$type": "number", "?value": 0.0},
+        "Gamma": {r"$type": "number", "?value": 0.0}
       },
-      "Motion" : {
+      "Motion": {
         "Acceleration": {
-          "X": {
-            r"$type": "number",
-            "?value": 0.0
-          },
-          "Y": {
-            r"$type": "number",
-            "?value": 0.0
-          },
-          "Z": {
-            r"$type": "number",
-            "?value": 0.0
-          }
+          "X": {r"$type": "number", "?value": 0.0},
+          "Y": {r"$type": "number", "?value": 0.0},
+          "Z": {r"$type": "number", "?value": 0.0}
         },
         "RotationRate": {
-          "Alpha": {
-            r"$type": "number",
-            "?value": 0.0
-          },
-          "Beta": {
-            r"$type": "number",
-            "?value": 0.0
-          },
-          "Gamma": {
-            r"$type": "number",
-            "?value": 0.0
-          }
+          "Alpha": {r"$type": "number", "?value": 0.0},
+          "Beta": {r"$type": "number", "?value": 0.0},
+          "Gamma": {r"$type": "number", "?value": 0.0}
         },
-        "Interval": {
-          r"$type": "number",
-          "?value": 0.0
-        }
+        "Interval": {r"$type": "number", "?value": 0.0}
       }
     },
     "Text_Display": {
       r"$name": "Text Display",
-      "Visible": {
-        r"$type": "bool",
-        r"$writable": "write",
-        "?value": false
-      },
+      "Visible": {r"$type": "bool", r"$writable": "write", "?value": false},
       "Text_Size": {
         r"$name": "Text Size",
         r"$type": "number",
@@ -145,28 +95,50 @@ class Html5Link {
   }
 
   Future initialize() async {
-    DEFAULT_BROKER = await BrowserUtils.fetchBrokerUrlFromPath("broker_url",
-        "http://localhost:8080/conn");
+    DEFAULT_BROKER = await BrowserUtils.fetchBrokerUrlFromPath(
+        "broker_url", "http://localhost:8080/conn");
 
     if (dom.window.localStorage.containsKey("log_level")) {
       var l = dom.window.localStorage["log_level"];
       updateLogLevel(l);
     }
-    if (dom.window.location.hash.isNotEmpty
-          && dom.window.location.hash.substring(1).isNotEmpty) {
+    var args = {};
+    var updateSearchString = false;
+    if(dom.window.location.search.length > 1) {
+      args = Uri.splitQueryString(dom.window.location.search.substring(1));
+    }
+
+    if (args['a'] != null && args['a'].isNotEmpty) {
+      currentBroker = args['a'];
+    } else if (dom.window.location.hash.isNotEmpty &&
+        dom.window.location.hash.substring(1).isNotEmpty) {
       var tmpLoc = Uri.decodeFull(dom.window.location.hash.substring(1));
       currentBroker = tmpLoc;
+      updateSearchString = true;
     } else if (dom.window.localStorage.containsKey("broker_url")) {
       currentBroker = dom.window.localStorage["broker_url"];
-      dom.window.location.hash = currentBroker;
+      args['a'] = currentBroker;
+      updateSearchString = true;
     } else {
       currentBroker = DEFAULT_BROKER;
       firstRun = true;
     }
-    if (dom.window.localStorage.containsKey("link_name")) {
+
+    if (args['n'] != null && args['n'].isNotEmpty) {
+      currentName = args['n'];
+    } else if (dom.window.localStorage.containsKey("link_name")) {
       currentName = dom.window.localStorage["link_name"];
+      args['n'] = currentName;
+      updateSearchString = true;
     } else {
       currentName = DEFAULT_NAME;
+    }
+
+    if (updateSearchString) {
+      dom.window.location.hash = '';
+      dom.window.location.search =
+          'n=${Uri.encodeQueryComponent(args['n'])}' +
+              '&a=${Uri.encodeQueryComponent(args['a'])}';
     }
 
     link = new LinkProvider(currentBroker, "${currentName}-",
@@ -188,11 +160,13 @@ class Html5Link {
     rotGammaNode = provider.getNode("/Accelerometer/Motion/RotationRate/Gamma");
     intervalNode = provider.getNode("/Accelerometer/Motion/Interval");
 
-    dom.window.navigator.geolocation.watchPosition(
-        enableHighAccuracy: true,
-        timeout: const Duration(seconds: 60),
-        maximumAge: const Duration(seconds: 0)
-    ).listen(positionUpdated).onError((error) {
+    dom.window.navigator.geolocation
+        .watchPosition(
+            enableHighAccuracy: true,
+            timeout: const Duration(seconds: 60),
+            maximumAge: const Duration(seconds: 0))
+        .listen(positionUpdated)
+        .onError((error) {
       print(error.message);
     });
     dom.window.on['deviceorientation'].listen(orientationUpdated);
@@ -238,17 +212,17 @@ class Html5Link {
 
     model.latitude.value = coords.latitude.toStringAsFixed(7);
     model.longitude.value = coords.longitude.toStringAsFixed(7);
-    if(coords.heading != null) {
+    if (coords.heading != null) {
       model.heading.value = coords.heading.toStringAsFixed(7);
     }
-    if(coords.speed != null) {
+    if (coords.speed != null) {
       model.speed.value = coords.speed.toStringAsFixed(7);
     }
   }
 
   /// Event handler for device orientation
   void orientationUpdated(dom.DeviceOrientationEvent event) {
-    if(event.alpha != null) {
+    if (event.alpha != null) {
       alphaNode.updateValue(event.alpha);
       model.alpha.value = event.alpha.toStringAsFixed(7);
     }
@@ -265,9 +239,9 @@ class Html5Link {
   /// Event handler for device motion
   void motionUpdated(dom.DeviceMotionEvent event) {
     var accel, rot;
-    if(event.acceleration?.x != null
-        && event.acceleration?.y != null
-        && event.acceleration?.z != null) {
+    if (event.acceleration?.x != null &&
+        event.acceleration?.y != null &&
+        event.acceleration?.z != null) {
       accel = event.acceleration;
       print('DEBUG: ${event.acceleration}');
       accelXNode.updateValue(accel.x);
@@ -278,13 +252,12 @@ class Html5Link {
       model.accelZ.value = accel.z.toStringAsFixed(2);
       intervalNode.updateValue(event.interval);
     }
-    if(event.rotationRate != null) {
+    if (event.rotationRate != null) {
       rot = event.rotationRate;
       rotAlphaNode.updateValue(rot.alpha);
       rotBetaNode.updateValue(rot.beta);
       rotGammaNode.updateValue(rot.gamma);
     }
-
   }
 
   /// Triggered by OK response to Message Dialog
@@ -297,10 +270,11 @@ class Html5Link {
     if (currentBroker != broker || currentName != name || firstRun) {
       currentBroker = broker;
       currentName = name;
-      dom.window.location.hash = currentBroker;
       dom.window.localStorage["broker_url"] = currentBroker;
       dom.window.localStorage["link_name"] = currentName;
       firstRun = false;
+      dom.window.location.search =
+        "n=${Uri.encodeComponent(name)}&a=${Uri.encodeComponent(broker)}";
       connect();
     }
   }
@@ -383,7 +357,7 @@ class Html5Model {
   }
 
   void _checkVisibility(dom.DivElement el, String value) {
-    if(value != null && value.isNotEmpty) {
+    if (value != null && value.isNotEmpty) {
       el.hidden = false;
     } else {
       el.hidden = true;
@@ -391,7 +365,8 @@ class Html5Model {
   }
 }
 
-@MdlComponentModel @di.Injectable()
+@MdlComponentModel
+@di.Injectable()
 class Application extends MaterialApplication {
   ReplyDialog replyDialog;
   SettingsDialog settingsDialog;
@@ -407,18 +382,21 @@ class Application extends MaterialApplication {
     final Html5Model model = new Html5Model();
     final Html5Link myLink = new Html5Link(model, textDialog);
     final replyBtn = MaterialButton.widget(dom.querySelector('#replybtn'));
-    final settingsBtn = MaterialButton.widget(dom.querySelector('#settingsbtn'));
+    final settingsBtn =
+        MaterialButton.widget(dom.querySelector('#settingsbtn'));
 
     replyBtn.onClick.listen((_) {
       replyDialog(title: 'Reply').show().then((MdlDialogStatus status) {
-        if(status == MdlDialogStatus.OK) {
+        if (status == MdlDialogStatus.OK) {
           myLink.sendReply(replyDialog.replyValue.value);
         }
       });
     });
     settingsBtn.onClick.listen((_) {
-      settingsDialog(title: 'Settings').show().then((MdlDialogStatus status) {
-        if(status == MdlDialogStatus.OK) {
+      settingsDialog(title: 'Settings',
+          url: myLink.currentBroker,
+          name: myLink.currentName).show().then((MdlDialogStatus status) {
+        if (status == MdlDialogStatus.OK) {
           var broker = settingsDialog.brokerUrl.value;
           var name = settingsDialog.linkName.value;
           myLink.updateSettings(broker, name);
@@ -428,10 +406,10 @@ class Application extends MaterialApplication {
     await myLink.initialize();
     settingsDialog = new SettingsDialog(myLink.currentBroker);
     myLink.connect();
-    if(myLink.firstRun) {
+    if (myLink.firstRun) {
       print('First run');
       settingsDialog(title: 'Settings').show().then((MdlDialogStatus status) {
-        if(status == MdlDialogStatus.OK) {
+        if (status == MdlDialogStatus.OK) {
           var broker = settingsDialog.brokerUrl.value;
           var name = settingsDialog.linkName.value;
           myLink.updateSettings(broker, name);
@@ -443,8 +421,8 @@ class Application extends MaterialApplication {
 
 main() {
   registerMdl();
-  var application = componentFactory().rootContext(Application).run()
-    .then((Application app) {
+  var application =
+      componentFactory().rootContext(Application).run().then((Application app) {
     return app.run();
   });
 }
