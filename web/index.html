@@ -1,69 +1,29 @@
-<!DOCTYPE html>
+
+<!--
+  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+  is governed by a BSD-style license that can be found in the LICENSE file.
+-->
+
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML5 DSLink</title>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
-    <link id="theme" rel="stylesheet" href="packages/mdl/assets/styles/material.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <script src="packages/web_components/webcomponents.js"></script>
+    <script src="packages/web_components/dart_support.js"></script>
+    <!-- example of using a paper element -->
+    <link rel="import" href="packages/polymer_elements/roboto.html">
+
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-        .reply-dialog {
-            width: 500px;
-        }
-        .reply-dialog .mdl-textfield {
-            width: 100%;
-        }
-        .box {
-            font-size: 20px;
-            margin: 15px;
-            padding: 20px 20px;
-            border-radius: 20px;
-            background-color: #eee;
-            display: inline-block;
-            text-align: center;
-        }
-        .mdl-grid {
-            justify-content: center;
-        }
+
     </style>
 </head>
-<body class="mdl-upgrading" >
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-        <!--<div class="mdl-layout-icon"></div> -->
-        <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Web Browser Link</span>
-            <div class="mdl-layout-spacer"></div>
-            <nav class="mdl-navigation">
-                <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="replybtn">
-                    <i class="material-icons">reply</i>
-                </button>
-                <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="settingsbtn">
-                    <i class="material-icons">settings</i>
-                </button>
-            </nav>
-        </div>
-    </header>
-    <main class="mdl-layout__content">
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="latitude"></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="longitude"></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="heading" hidden></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="speed" hidden></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="alpha" hidden></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="beta" hidden></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="gamma" hidden></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="accelX" hidden></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="accelY" hidden></div>
-            <div class="mdl-cell mdl-cell--3-col box mdl-content mdl-js-content" id="accelZ" hidden></div>
-        </div>
-    </main>
-</div>
+
+<body unresolved class="fullbleed layout vertical">
+<main-app></main-app>
 
 <script type="application/dart" src="index.dart"></script>
-<script data-pub-inline src="packages/browser/dart.js"></script>
+<script src="packages/browser/dart.js"></script>
 </body>
 </html>

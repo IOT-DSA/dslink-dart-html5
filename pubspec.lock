@@ -4,15 +4,15 @@ packages:
   analyzer:
     description: analyzer
     source: hosted
-    version: "0.24.6"
+    version: "0.26.1+14"
   args:
     description: args
     source: hosted
-    version: "0.12.2+6"
+    version: "0.13.2"
   async:
     description: async
     source: hosted
-    version: "1.3.0"
+    version: "1.4.0"
   barback:
     description: barback
     source: hosted
@@ -25,10 +25,10 @@ packages:
     description: browser
     source: hosted
     version: "0.10.0+2"
-  browser_detect:
-    description: browser_detect
+  charcode:
+    description: charcode
     source: hosted
-    version: "1.0.3"
+    version: "1.1.0"
   cipher:
     description: cipher
     source: hosted
@@ -40,31 +40,31 @@ packages:
   code_transformers:
     description: code_transformers
     source: hosted
-    version: "0.2.9+3"
+    version: "0.2.9+4"
   collection:
     description: collection
     source: hosted
     version: "1.1.3"
-  console_log_handler:
-    description: console_log_handler
+  convert:
+    description: convert
     source: hosted
-    version: "0.1.4"
+    version: "1.0.0"
   crypto:
     description: crypto
     source: hosted
     version: "0.9.1"
-  di:
-    description: di
+  csslib:
+    description: csslib
     source: hosted
-    version: "3.3.4"
-  dnd:
-    description: dnd
+    version: "0.12.2"
+  dart_style:
+    description: dart_style
     source: hosted
-    version: "0.3.0"
+    version: "0.2.0"
   dslink:
     description:
       ref: null
-      resolved-ref: d3f5c1df83b369c5c232dc01d7bf792530bf3d27
+      resolved-ref: "79f63671cdaf0b50eb587c3e9a699845d345eaaa"
       url: "https://github.com/IOT-DSA/sdk-dslink-dart.git"
     source: git
     version: "1.0.0"
@@ -72,38 +72,90 @@ packages:
     description: fixnum
     source: hosted
     version: "0.9.1+2"
-  intl:
-    description: intl
+  glob:
+    description: glob
     source: hosted
-    version: "0.12.4+2"
+    version: "1.0.5"
+  html:
+    description: html
+    source: hosted
+    version: "0.12.2"
+  http_multi_server:
+    description: http_multi_server
+    source: hosted
+    version: "1.3.2"
+  http_parser:
+    description: http_parser
+    source: hosted
+    version: "1.1.0"
+  initialize:
+    description: initialize
+    source: hosted
+    version: "0.6.1+2"
   logging:
     description: logging
     source: hosted
     version: "0.11.2"
-  logging_handlers:
-    description: logging_handlers
+  matcher:
+    description: matcher
     source: hosted
-    version: "0.8.0"
-  mdl:
-    description: mdl
+    version: "0.12.0+1"
+  mime:
+    description: mime
     source: hosted
-    version: "1.6.1"
+    version: "0.9.3"
+  package_config:
+    description: package_config
+    source: hosted
+    version: "0.1.3"
   path:
     description: path
     source: hosted
     version: "1.3.6"
-  petitparser:
-    description: petitparser
+  plugin:
+    description: plugin
     source: hosted
-    version: "1.5.0"
+    version: "0.1.0"
+  polymer:
+    description: polymer
+    source: hosted
+    version: "1.0.0-rc.5"
+  polymer_elements:
+    description: polymer_elements
+    source: hosted
+    version: "1.0.0-rc.3"
+  polymer_interop:
+    description: polymer_interop
+    source: hosted
+    version: "1.0.0-rc.4"
   pool:
     description: pool
     source: hosted
-    version: "1.2.0"
-  route_hierarchical:
-    description: route_hierarchical
+    version: "1.2.1"
+  pub_semver:
+    description: pub_semver
     source: hosted
-    version: "0.6.2"
+    version: "1.2.2"
+  reflectable:
+    description: reflectable
+    source: hosted
+    version: "0.3.3"
+  shelf:
+    description: shelf
+    source: hosted
+    version: "0.6.4+1"
+  shelf_static:
+    description: shelf_static
+    source: hosted
+    version: "0.2.3+1"
+  shelf_web_socket:
+    description: shelf_web_socket
+    source: hosted
+    version: "0.0.1+4"
+  source_map_stack_trace:
+    description: source_map_stack_trace
+    source: hosted
+    version: "1.0.4"
   source_maps:
     description: source_maps
     source: hosted
@@ -116,14 +168,30 @@ packages:
     description: stack_trace
     source: hosted
     version: "1.4.2"
-  validate:
-    description: validate
+  string_scanner:
+    description: string_scanner
     source: hosted
-    version: "1.4.2"
+    version: "0.1.4"
+  test:
+    description: test
+    source: hosted
+    version: "0.12.5+1"
+  typed_data:
+    description: typed_data
+    source: hosted
+    version: "1.1.1"
+  utf:
+    description: utf
+    source: hosted
+    version: "0.9.0+2"
   watcher:
     description: watcher
     source: hosted
     version: "0.9.7"
+  web_components:
+    description: web_components
+    source: hosted
+    version: "0.12.0+3"
   when:
     description: when
     source: hosted
@@ -132,3 +200,7 @@ packages:
     description: which
     source: hosted
     version: "0.1.3"
+  yaml:
+    description: yaml
+    source: hosted
+    version: "2.1.7"
