@@ -1,0 +1,99 @@
+<!--
+  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+  is governed by a BSD-style license that can be found in the LICENSE file.
+-->
+
+<dom-module id="main-app">
+    <template>
+        <style>
+            :host {
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .box {
+                font-size: 20px;
+                margin: 20px;
+                padding: 20px 20px;
+                border-radius: 20px;
+                background-color: #eee;
+                display: inline-block;
+                text-align: center;
+            }
+        </style>
+
+        <app-router id="router" on-route-changed="routeChanged"></app-router>
+        <!-- Settings Dialog -->
+        <paper-dialog withBackdrop="true" entry-animation="scale-up-animation"
+                      exit-animation="fade-out-animation"
+                      autofocus id="settings-dialog">
+            <h2>Settings</h2>
+            <div class="vertical layout center-justified">
+                <paper-input id="setting-name" label="Link Name" value="{{linkName}}"></paper-input>
+                <paper-input id="setting-broker" label="Broker URL" value="{{brokerUrl}}"></paper-input>
+            </div>
+
+            <div class="horizontal end-justified layout">
+                <paper-button dialog-confirm id="save-button">Save</paper-button>
+            </div>
+        </paper-dialog>
+
+        <!-- Reply Dialog -->
+        <paper-dialog backdrop="true" entry-animation="scale-up-animation"
+                      exit-animation="fade-out-animation"
+                      autofocus id="reply-dialog">
+            <h2>Reply</h2>
+            <div class="vertical layout center-justified">
+                <paper-input id="reply-value" label="Message" value="{{replyMessage}}"></paper-input>
+            </div>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss>Close</paper-button>
+                <paper-button dialog-confirm autofocus>Send</paper-button>
+            </div>
+        </paper-dialog>
+
+        <paper-dialog withBackdrop entry-animation="scale-up-animation"
+                      exit-animation="scale-down-animation"
+                      autofocus id="msg-dialog">
+            <div id="msg-font">[[model.message]]</div>
+        </paper-dialog>
+
+        <paper-header-panel class="flex" mode="standard">
+            <paper-toolbar>
+                <span class="title">Web Browser Link</span>
+                <paper-icon-button icon="reply" title="reply" on-click="openReplyDialog"></paper-icon-button>
+                <paper-icon-button icon="settings" title="settings" on-click="openSettingsDialog"></paper-icon-button>
+            </paper-toolbar>
+            <div class="flex layout horizontal center around-justified wrap">
+                <div class="box">
+                    Latitude: [[model.latitude]]
+                </div>
+
+                <div class="box">
+                    Longitude: [[model.longitude]]
+                </div>
+
+                <div id="heading-box" hidden class="box">
+                    Heading: [[model.heading]]
+                </div>
+
+                <div id="speed-box" hidden class="box">
+                    Speed: [[model.speed]]
+                </div>
+
+                <div id="alpha-box" hidden class="box">
+                    Alpha: [[model.alpha]]
+                </div>
+
+                <div id="beta-box" hidden class="box">
+                    Beta: [[model.beta]]
+                </div>
+
+                <div id="gamma-box" hidden class="box">
+                    Gamma: [[model.gamma]]
+                </div>
+            </div>
+        </paper-header-panel>
+
+    </template>
+</dom-module>
