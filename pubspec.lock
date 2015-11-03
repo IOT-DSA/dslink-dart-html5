@@ -48,7 +48,7 @@ packages:
   convert:
     description: convert
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   crypto:
     description: crypto
     source: hosted
@@ -127,7 +127,7 @@ packages:
   polymer_interop:
     description: polymer_interop
     source: hosted
-    version: "1.0.0-rc.4"
+    version: "1.0.0-rc.4+1"
   pool:
     description: pool
     source: hosted
@@ -135,7 +135,7 @@ packages:
   pub_semver:
     description: pub_semver
     source: hosted
-    version: "1.2.2"
+    version: "1.2.3"
   reflectable:
     description: reflectable
     source: hosted
