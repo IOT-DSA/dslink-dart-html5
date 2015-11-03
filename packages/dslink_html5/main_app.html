@@ -11,6 +11,7 @@
             }
 
             .box {
+                width: 300px;
                 font-size: 20px;
                 margin: 20px;
                 padding: 20px 20px;
@@ -19,13 +20,17 @@
                 display: inline-block;
                 text-align: center;
             }
+
+            .dlg {
+                width: 400px;
+            }
         </style>
 
         <app-router id="router" on-route-changed="routeChanged"></app-router>
         <!-- Settings Dialog -->
         <paper-dialog withBackdrop="true" entry-animation="scale-up-animation"
                       exit-animation="fade-out-animation"
-                      autofocus id="settings-dialog">
+                      autofocus id="settings-dialog" class="dlg">
             <h2>Settings</h2>
             <div class="vertical layout center-justified">
                 <paper-input id="setting-name" label="Link Name" value="{{linkName}}"></paper-input>
@@ -40,7 +45,7 @@
         <!-- Reply Dialog -->
         <paper-dialog backdrop="true" entry-animation="scale-up-animation"
                       exit-animation="fade-out-animation"
-                      autofocus id="reply-dialog">
+                      autofocus id="reply-dialog" class="dlg">
             <h2>Reply</h2>
             <div class="vertical layout center-justified">
                 <paper-input id="reply-value" label="Message" value="{{replyMessage}}"></paper-input>
