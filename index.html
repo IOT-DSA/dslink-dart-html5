@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML5 DSLink</title>
 
-    <script src="packages/web_components/webcomponents.js"></script>
+    <script src="packages/web_components/webcomponents-lite.js"></script>
     <script src="packages/web_components/dart_support.js"></script>
     <!-- example of using a paper element -->
     
@@ -17952,14 +17952,16 @@ Configuration:
 
             .dlg {
                 padding: 10px;
-                width: 400px;
                 background-color: white;
+            }
+            .dlg.dlg-size {
+                width: 400px;
             }
         </style>
 
         <app-router id="router" on-route-changed="routeChanged"></app-router>
         <!-- Settings Dialog -->
-        <paper-dialog with-backdrop="true" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autofocus="" id="settings-dialog" class="dlg">
+        <paper-dialog with-backdrop="true" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autofocus="" id="settings-dialog" class="dlg dlg-size">
             <h2>Settings</h2>
             <div class="vertical layout center-justified">
                 <paper-input id="setting-name" label="Link Name" value="{{linkName}}"></paper-input>
@@ -17972,7 +17974,7 @@ Configuration:
         </paper-dialog>
 
         <!-- Reply Dialog -->
-        <paper-dialog with-backdrop="" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autofocus="" id="reply-dialog" class="dlg">
+        <paper-dialog with-backdrop="" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autofocus="" id="reply-dialog" class="dlg dlg-size">
             <h2>Reply</h2>
             <div class="vertical layout center-justified">
                 <paper-input id="reply-value" label="Message" value="{{replyMessage}}"></paper-input>
@@ -17984,7 +17986,7 @@ Configuration:
             </div>
         </paper-dialog>
 
-        <paper-dialog with-backdrop="" entry-animation="scale-up-animation" exit-animation="scale-down-animation" autofocus="" id="msg-dialog">
+        <paper-dialog with-backdrop="" entry-animation="scale-up-animation" exit-animation="scale-down-animation" autofocus="" class="dlg" id="msg-dialog">
             <div id="msg-font">[[model.message]]</div>
         </paper-dialog>
 

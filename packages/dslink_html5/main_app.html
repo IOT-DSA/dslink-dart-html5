@@ -23,8 +23,10 @@
 
             .dlg {
                 padding: 10px;
-                width: 400px;
                 background-color: white;
+            }
+            .dlg.dlg-size {
+                width: 400px;
             }
         </style>
 
@@ -32,7 +34,7 @@
         <!-- Settings Dialog -->
         <paper-dialog with-backdrop="true" entry-animation="scale-up-animation"
                       exit-animation="fade-out-animation"
-                      autofocus id="settings-dialog" class="dlg">
+                      autofocus id="settings-dialog" class="dlg dlg-size">
             <h2>Settings</h2>
             <div class="vertical layout center-justified">
                 <paper-input id="setting-name" label="Link Name" value="{{linkName}}"></paper-input>
@@ -47,7 +49,7 @@
         <!-- Reply Dialog -->
         <paper-dialog with-backdrop entry-animation="scale-up-animation"
                       exit-animation="fade-out-animation"
-                      autofocus id="reply-dialog" class="dlg">
+                      autofocus id="reply-dialog" class="dlg dlg-size">
             <h2>Reply</h2>
             <div class="vertical layout center-justified">
                 <paper-input id="reply-value" label="Message" value="{{replyMessage}}"></paper-input>
@@ -61,7 +63,7 @@
 
         <paper-dialog with-backdrop entry-animation="scale-up-animation"
                       exit-animation="scale-down-animation"
-                      autofocus id="msg-dialog">
+                      autofocus class="dlg" id="msg-dialog">
             <div id="msg-font">[[model.message]]</div>
         </paper-dialog>
 
