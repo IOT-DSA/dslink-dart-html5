@@ -122,9 +122,9 @@ class Html5Link {
     });
 
     messageOpenNode = provider.getNode('/Text_Display/Visible')
-        ..subscribe((ValueUpdate update) {
-          _msgVisible.add(update.value);
-        });
+      ..subscribe((ValueUpdate update) {
+        _msgVisible.add(update.value);
+      });
   }
 
   connect() async {
@@ -142,5 +142,4 @@ class Html5Link {
     altitudeNode.updateValue(coords.altitude);
     speedNode.updateValue(coords.speed);
   }
-
 }

@@ -70,22 +70,24 @@ class MainApp extends PolymerElement {
   void _initLink() {
     if (link == null) {
       link = new Html5Link(linkName, brokerUrl)
-          ..onFontSize.listen((font) {
-            msgFont.style.fontSize = '${font}px';
-          })
-          ..onMessage.listen((msg) { set('model.message', msg); })
-          ..onDisplayMsg.listen((isOn) {
-            if (isOn) {
+        ..onFontSize.listen((font) {
+          msgFont.style.fontSize = '${font}px';
+        })
+        ..onMessage.listen((msg) {
+          set('model.message', msg);
+        })
+        ..onDisplayMsg.listen((isOn) {
+          if (isOn) {
+            _msgIsOpen = isOn;
+            msgDialog.open();
+          } else {
+            if (_msgIsOpen) {
               _msgIsOpen = isOn;
-              msgDialog.open();
-            } else {
-              if (_msgIsOpen) {
-                _msgIsOpen = isOn;
-                msgDialog.close();
-              }
+              msgDialog.close();
             }
-          })
-          ..initialize();
+          }
+        })
+        ..initialize();
     }
   }
 
@@ -130,7 +132,8 @@ class MainApp extends PolymerElement {
       window.localStorage['broker_url'] = brokerUrl;
       window.localStorage['link_name'] = linkName;
       await link.connect();
-    } else { // closed with dismiss
+    } else {
+      // closed with dismiss
       if (_origUrl != brokerUrl) {
         set('brokerUrl', _origUrl);
       }
@@ -144,7 +147,7 @@ class MainApp extends PolymerElement {
   @reflectable
   routeChanged(CustomEvent e, detail) async {
     set('brokerUrl', detail['url']);
-    set('linkName',detail['name']);
+    set('linkName', detail['name']);
     _initLink();
     if (detail['firstRun']) {
       isReady.then((_) {
@@ -168,12 +171,13 @@ class MainApp extends PolymerElement {
     _readyComp.complete(true);
 
     /// Setup event listeners
-    window.navigator.geolocation.watchPosition(
-        enableHighAccuracy: true,
-        timeout: const Duration(seconds: 60),
-        maximumAge: const Duration(seconds: 0))
-      .listen(positionUpdate)
-      .onError((error) => print(error.message));
+    window.navigator.geolocation
+        .watchPosition(
+            enableHighAccuracy: true,
+            timeout: const Duration(seconds: 60),
+            maximumAge: const Duration(seconds: 0))
+        .listen(positionUpdate)
+        .onError((error) => print(error.message));
 
     window.on['deviceorientation'].listen(orientationUpdated);
     window.on['devicemotion'].listen(motionUpdated);
@@ -237,10 +241,11 @@ class MainApp extends PolymerElement {
         e.acceleration?.z != null) {
       var accel = e.acceleration;
 
-      link..accelXNode.updateValue(accel.x)
-          ..accelYNode.updateValue(accel.y)
-          ..accelZNode.updateValue(accel.z)
-          ..intervalNode.updateValue(e.interval);
+      link
+        ..accelXNode.updateValue(accel.x)
+        ..accelYNode.updateValue(accel.y)
+        ..accelZNode.updateValue(accel.z)
+        ..intervalNode.updateValue(e.interval);
       set('model.accelX', accel.x.toStringAsFixed(2));
       set('model.accelY', accel.y.toStringAsFixed(2));
       set('model.accelZ', accel.z.toStringAsFixed(2));
@@ -248,9 +253,10 @@ class MainApp extends PolymerElement {
 
     if (e.rotationRate != null) {
       var rot = e.rotationRate;
-      link..rotAlphaNode.updateValue(rot.alpha)
-          ..rotBetaNode.updateValue(rot.beta)
-          ..rotGammaNode.updateValue(rot.gamma);
+      link
+        ..rotAlphaNode.updateValue(rot.alpha)
+        ..rotBetaNode.updateValue(rot.beta)
+        ..rotGammaNode.updateValue(rot.gamma);
     }
   }
 

@@ -60,22 +60,18 @@ class AppRouter extends PolymerElement {
   void attached() {
     print('Firing: addr: $_url, name: $_name');
     if (_updateUri) {
-      var url = _loc.protocol + '//' + _loc.host +
+      var url = _loc.protocol +
+          '//' +
+          _loc.host +
           _loc.pathname +
           '?n=${Uri.encodeComponent(_name)}'
           '&a=${Uri.encodeComponent(_url)}';
       print('Replacing: $url');
-      dom.window.history.replaceState({
-        'a' : _url,
-        'n' : _name
-      }, dom.document.title, url);
+      dom.window.history
+          .replaceState({'a': _url, 'n': _name}, dom.document.title, url);
       _updateUri = false;
     }
-    this.fire('route-changed', detail: {
-      'name' : _name,
-      'url' : _url,
-      'firstRun': firstRun
-    });
+    this.fire('route-changed',
+        detail: {'name': _name, 'url': _url, 'firstRun': firstRun});
   }
-
 }
