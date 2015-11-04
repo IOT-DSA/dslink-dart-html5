@@ -17951,13 +17951,15 @@ Configuration:
             }
 
             .dlg {
+                padding: 10px;
                 width: 400px;
+                background-color: white;
             }
         </style>
 
         <app-router id="router" on-route-changed="routeChanged"></app-router>
         <!-- Settings Dialog -->
-        <paper-dialog withbackdrop="true" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autofocus="" id="settings-dialog" class="dlg">
+        <paper-dialog with-backdrop="true" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autofocus="" id="settings-dialog" class="dlg">
             <h2>Settings</h2>
             <div class="vertical layout center-justified">
                 <paper-input id="setting-name" label="Link Name" value="{{linkName}}"></paper-input>
@@ -17970,7 +17972,7 @@ Configuration:
         </paper-dialog>
 
         <!-- Reply Dialog -->
-        <paper-dialog backdrop="true" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autofocus="" id="reply-dialog" class="dlg">
+        <paper-dialog with-backdrop="" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autofocus="" id="reply-dialog" class="dlg">
             <h2>Reply</h2>
             <div class="vertical layout center-justified">
                 <paper-input id="reply-value" label="Message" value="{{replyMessage}}"></paper-input>
@@ -17982,7 +17984,7 @@ Configuration:
             </div>
         </paper-dialog>
 
-        <paper-dialog withbackdrop="" entry-animation="scale-up-animation" exit-animation="scale-down-animation" autofocus="" id="msg-dialog">
+        <paper-dialog with-backdrop="" entry-animation="scale-up-animation" exit-animation="scale-down-animation" autofocus="" id="msg-dialog">
             <div id="msg-font">[[model.message]]</div>
         </paper-dialog>
 

@@ -22,13 +22,15 @@
             }
 
             .dlg {
+                padding: 10px;
                 width: 400px;
+                background-color: white;
             }
         </style>
 
         <app-router id="router" on-route-changed="routeChanged"></app-router>
         <!-- Settings Dialog -->
-        <paper-dialog withBackdrop="true" entry-animation="scale-up-animation"
+        <paper-dialog with-backdrop="true" entry-animation="scale-up-animation"
                       exit-animation="fade-out-animation"
                       autofocus id="settings-dialog" class="dlg">
             <h2>Settings</h2>
@@ -43,7 +45,7 @@
         </paper-dialog>
 
         <!-- Reply Dialog -->
-        <paper-dialog backdrop="true" entry-animation="scale-up-animation"
+        <paper-dialog with-backdrop entry-animation="scale-up-animation"
                       exit-animation="fade-out-animation"
                       autofocus id="reply-dialog" class="dlg">
             <h2>Reply</h2>
@@ -57,7 +59,7 @@
             </div>
         </paper-dialog>
 
-        <paper-dialog withBackdrop entry-animation="scale-up-animation"
+        <paper-dialog with-backdrop entry-animation="scale-up-animation"
                       exit-animation="scale-down-animation"
                       autofocus id="msg-dialog">
             <div id="msg-font">[[model.message]]</div>
