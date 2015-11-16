@@ -5,6 +5,7 @@ library dslink.html5.main_app;
 
 import 'dart:async';
 import 'dart:html';
+import 'dart:typed_data';
 
 import 'package:polymer/polymer.dart';
 import 'package:polymer_elements/paper_dialog.dart';
@@ -14,12 +15,15 @@ import 'package:polymer_elements/paper_header_panel.dart';
 import 'package:polymer_elements/paper_toolbar.dart';
 import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/iron_icons.dart';
+import 'package:polymer_elements/av_icons.dart';
 import 'package:polymer_elements/neon_animation.dart';
 import 'package:web_components/web_components.dart';
 
 import 'package:dslink_html5/app_router.dart';
 import 'package:dslink_html5/link_model.dart';
 import 'package:dslink_html5/html5_link.dart';
+
+import 'package:dslink/browser.dart';
 
 /// Uses [PaperInput]
 @PolymerRegister('main-app')
@@ -35,9 +39,15 @@ class MainApp extends PolymerElement {
   @property
   Html5Link link;
 
+  @property
+  String videoPath = '';
+
+  VideoElement video;
+
   PaperDialog settingDialog;
   PaperDialog replyDialog;
   PaperDialog msgDialog;
+  PaperDialog videoDialog;
   DivElement msgFont;
 
   String _origUrl;
@@ -56,6 +66,7 @@ class MainApp extends PolymerElement {
     replyDialog = $['reply-dialog'];
     replyDialog.on['iron-overlay-closed'].listen(closeReplyDialog);
     msgDialog = $['msg-dialog'];
+    videoDialog = $['video-dialog'];
     msgDialog.on['iron-overlay-closed'].listen((_) {
       if (_msgIsOpen) {
         link.messageOpenNode.updateValue(false);
@@ -63,6 +74,7 @@ class MainApp extends PolymerElement {
       _msgIsOpen = false;
     });
     msgFont = $['msg-font'];
+    video = $['video'];
   }
 
   /// Helper function to initialize [link] adding required listeners.
@@ -89,6 +101,11 @@ class MainApp extends PolymerElement {
         })
         ..initialize();
     }
+  }
+
+  @reflectable
+  void openVideoDialog(Event e, detail) {
+    videoDialog.open();
   }
 
   /// Event handler for open reply button
@@ -259,6 +276,71 @@ class MainApp extends PolymerElement {
         ..rotGammaNode.updateValue(rot.gamma);
     }
   }
+
+  @reflectable
+  startVideo(Event e, detail) async {
+    if (video.src != null && video.src.isNotEmpty) {
+      video.pause();
+      video.src = "";
+    }
+
+    var path = videoPath;
+    print("Displaying Video from ${path}");
+
+    var sizePath = path + "/size";
+    var getChunkPath = path + "/readBinaryChunk";
+    var contentTypePath = path + "/type";
+
+    int size = (await link.link.requester.getNodeValue(sizePath)).value;
+    String contentType = (await link.link.requester.getNodeValue(contentTypePath)).value;
+    String codec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+
+    if (contentType == "video/webm") {
+      codec = 'video/webm; codecs="vorbis, vp8"';
+    }
+
+    print("Video Size: ${size} bytes");
+
+    var source = new MediaSource();
+
+    source.addEventListener("sourceopen", (e) async {
+      CHUNK_COUNT = (size / 512000).round();
+      var chunkSize = (size / CHUNK_COUNT).ceil();
+
+      print("Chunk Size: ${chunkSize} bytes");
+
+      var buff = source.addSourceBuffer(codec);
+      for (var i = 0; i < CHUNK_COUNT; ++i) {
+        var start = chunkSize * i;
+        var end = start + chunkSize;
+        RequesterInvokeUpdate update = await link.link.requester.invoke(getChunkPath, {
+          "start": start,
+          "end": start + chunkSize
+        }).first;
+
+        Map map = update.updates[0];
+        ByteData data = map["data"];
+
+        print("Chunk ${i} out of ${CHUNK_COUNT}");
+
+        if (i + 1 == CHUNK_COUNT) {
+          source.endOfStream();
+        } else {
+          buff.appendBuffer(data.buffer);
+        }
+
+        await buff.on["updateend"].first;
+      }
+
+      source.endOfStream();
+    });
+
+    video.src = Url.createObjectUrlFromSource(source);
+    video.autoplay = true;
+    video.play();
+  }
+
+  int CHUNK_COUNT = 200;
 
 //  /// Called when an instance of main-app is removed from the DOM.
 //  detached() {
