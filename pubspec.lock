@@ -64,7 +64,7 @@ packages:
   dslink:
     description:
       ref: null
-      resolved-ref: "79f63671cdaf0b50eb587c3e9a699845d345eaaa"
+      resolved-ref: fd7346d9a32b8b3dabfafdb0d1afd1243c935aa6
       url: "https://github.com/IOT-DSA/sdk-dslink-dart.git"
     source: git
     version: "1.0.0"
@@ -104,6 +104,13 @@ packages:
     description: mime
     source: hosted
     version: "0.9.3"
+  msgpack:
+    description:
+      ref: null
+      resolved-ref: "5d3ed2bf81cdff292a68c33951685a9215e9d48c"
+      url: "git://github.com/DirectMyFile/msgpack.dart.git"
+    source: git
+    version: "0.1.0"
   package_config:
     description: package_config
     source: hosted
@@ -119,7 +126,7 @@ packages:
   polymer:
     description: polymer
     source: hosted
-    version: "1.0.0-rc.5"
+    version: "1.0.0-rc.6"
   polymer_elements:
     description: polymer_elements
     source: hosted
@@ -127,7 +134,7 @@ packages:
   polymer_interop:
     description: polymer_interop
     source: hosted
-    version: "1.0.0-rc.4+1"
+    version: "1.0.0-rc.5"
   pool:
     description: pool
     source: hosted
@@ -167,7 +174,7 @@ packages:
   stack_trace:
     description: stack_trace
     source: hosted
-    version: "1.4.2"
+    version: "1.5.0"
   string_scanner:
     description: string_scanner
     source: hosted
