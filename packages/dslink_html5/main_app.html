@@ -46,6 +46,23 @@
             </div>
         </paper-dialog>
 
+        <!-- Video Dialog -->
+        <paper-dialog with-backdrop entry-animation="scale-up-animation"
+                      exit-animation="fade-out-animation"
+                      autofocus id="video-dialog" class="dlg dlg-size" style="width: 50%;">
+            <h2>Video</h2>
+            <div class="vertical layout center-justified">
+                <paper-input id="video-path" label="Video Path" value="{{videoPath}}"></paper-input>
+
+                <video id="video" controls style="width: 100%;"></video>
+            </div>
+
+            <div class="buttons">
+                <paper-button id="video-dialog-start" on-click="startVideo">Start</paper-button>
+                <paper-button dialog-dismiss>Close</paper-button>
+            </div>
+        </paper-dialog>
+
         <!-- Reply Dialog -->
         <paper-dialog with-backdrop entry-animation="scale-up-animation"
                       exit-animation="fade-out-animation"
@@ -70,6 +87,7 @@
         <paper-header-panel class="flex" mode="standard">
             <paper-toolbar>
                 <span class="title">Web Browser Link</span>
+                <paper-icon-button icon="av:play-arrow" title="play" on-click="openVideoDialog"></paper-icon-button>
                 <paper-icon-button icon="reply" title="reply" on-click="openReplyDialog"></paper-icon-button>
                 <paper-icon-button icon="settings" title="settings" on-click="openSettingsDialog"></paper-icon-button>
             </paper-toolbar>
