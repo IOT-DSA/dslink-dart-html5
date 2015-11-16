@@ -2,7 +2,6 @@ library dslink.html5.app_router;
 
 import 'dart:html' as dom;
 import 'package:polymer/polymer.dart';
-//import 'package:web_components/web_components.dart';
 
 @PolymerRegister('app-router')
 class AppRouter extends PolymerElement {
