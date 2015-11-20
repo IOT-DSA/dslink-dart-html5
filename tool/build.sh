@@ -20,5 +20,5 @@ cat > dslink.json <<EOF
   }
 }
 EOF
-zip -r  ../../../files/html5.zip .
+zip -r  ../../../files/dslink-dart-html5.zip .
 cd ..
