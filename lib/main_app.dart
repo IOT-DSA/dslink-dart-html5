@@ -79,7 +79,7 @@ class MainApp extends PolymerElement {
 
   /// Helper function to initialize [link] adding required listeners.
   @reflectable
-  void _initLink() {
+  Future _initLink() async {
     if (link == null) {
       link = new Html5Link(linkName, brokerUrl)
         ..onFontSize.listen((font) {
@@ -98,8 +98,8 @@ class MainApp extends PolymerElement {
               msgDialog.close();
             }
           }
-        })
-        ..initialize();
+        });
+        await link.initialize();
     }
   }
 
@@ -119,7 +119,7 @@ class MainApp extends PolymerElement {
   closeReplyDialog(CustomEvent e) async {
     var status = e.detail;
     if (status['confirmed'] == true) {
-      _initLink();
+      await _initLink();
       link.provider.updateValue('/Message', replyMessage);
       print(replyMessage);
     }
@@ -141,7 +141,7 @@ class MainApp extends PolymerElement {
     // Closed with 'save' option.
     if (status['confirmed'] == true) {
       if (link == null) {
-        _initLink();
+        await _initLink();
       } else {
         link.currentName = linkName;
         link.currentBroker = brokerUrl;
@@ -165,7 +165,7 @@ class MainApp extends PolymerElement {
   routeChanged(CustomEvent e, detail) async {
     set('brokerUrl', detail['url']);
     set('linkName', detail['name']);
-    _initLink();
+    await _initLink();
     if (detail['firstRun']) {
       isReady.then((_) {
         _origName = linkName;
